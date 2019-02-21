@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','ShopCategoriesController@index');
+
+//定义商家分类路由
+Route::resource('shop','ShopCategoriesController');
+
+//定义商家信息路由
+Route::resource('shops','ShopsController');
+
+//定义商家用户路由
+Route::resource('user','UsersController');
