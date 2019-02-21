@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\shopCategories;
 use Illuminate\Http\Request;
 
 class ShopCategoriesController extends Controller
@@ -14,7 +15,7 @@ class ShopCategoriesController extends Controller
     public function index(Request $request)
     {
         if($request->keyword){
-            
+            $rows = shopCategories::
         }
         return view('Cate.index');
     }
