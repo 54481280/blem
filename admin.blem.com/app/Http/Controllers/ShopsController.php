@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ShopCategories;
 use App\Models\Shops;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
 {
@@ -33,8 +35,10 @@ class ShopsController extends Controller
      */
     public function create()
     {
+        //获取商家分类数据
+        $rows = ShopCategories::all();
         //返回添加商家信息表单
-        return view('Shops.create');
+        return view('Shops.create',compact('rows'));
     }
 
     /**
@@ -100,10 +104,10 @@ class ShopsController extends Controller
                 'fengniao' => $request->fengniao,
                 'bao' => $request->bao,
                 'piao' => $request->piao,
-                'zhun	' => $request->zhun	,
+                'zhun' => $request->zhun,
                 'start_send' => $request->start_send,
                 'send_cost' => $request->send_cost,
-                'notice	' => $request->notice,
+                'notice' => $request->notice,
                 'discount' => $request->discount,
                 'shop_img' => $path,
                 'status' => 1,//默认为1，管理员添加商户，默认正常
@@ -116,7 +120,7 @@ class ShopsController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'status' => 1,//管理员添加默认为1，启用
-            'shop_ip' => $result1->id,
+            'shop_id' => $result1->id,
         ]);
 
         if($result1 && $result2){
@@ -124,7 +128,6 @@ class ShopsController extends Controller
         } else{
             DB::rollBack();//出错，取消事务提交（回滚）
         }
-
 
         //添加商家功能完成，跳转页面并给出提示信息
         return redirect()->route('shops.index')->with('success','添加商家成功！');
@@ -137,9 +140,10 @@ class ShopsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shops $shop)
     {
-        //
+        //返回详情页面
+        return view('Shops.show',compact('shop'));
     }
 
     /**
@@ -148,10 +152,12 @@ class ShopsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ShopCategories $shop)
+    public function edit(Shops $shop)
     {
+        //获取商家分类数据
+        $rows = ShopCategories::all();
         //编辑商家分类表单
-        return view('Cate.edit',compact('shop'));
+        return view('Shops.edit',compact('shop','rows'));
     }
 
     /**
@@ -161,37 +167,62 @@ class ShopsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ShopCategories $shop,Request $request)
+    public function update(Shops $shop,Request $request)
     {
         //验证表单数据格式
         $this->validate($request,
             [
-                'name' => 'required',
-                'img' => 'image|max:2048',
+                //商家信息数据验证
+                'shop_name' => 'required',//商家名称
+                'shop_img' => 'image|max:2048',//商家图片
+                'start_send' => 'required',//起送金额不能为空
+                'send_cost' => 'required',//配送费不能为空
+                'notice' => 'required',//店铺公告不能为空
+                'discount' => 'required',//优惠信息不能为空
+
             ],
             [
-                'name.required' => '商家分类名称不能为空!',
-                'img.image' => '请上传正确格式的图片!',
-                'img.max' => '请上传的图片大小不超过2M!',
+                //商家信息数据验证
+                'shop_name.required' => '商家名称不能为空',
+                'shop_img.image' => '请上传正确格式的图片',
+                'shop_img.max' => '请上传的图片大小不超过2M',
+                'start_send.required' => '起送金额不能为空',
+                'send_cost.required' => '配送费不能为空',
+                'notice.required' => '店铺公告不能为空',
+                'discount.required' => '优惠信息不能为空',
+
             ]);
 
         //验证通过，上传图片到服务器，并获取上传后的图片路径
-        $path = $shop->img;//获取原始图片路径
-        if($img = $request->file('img')){
-            Storage::delete($shop->img);//删除原始图片
-            $path = $img->store('public/CateImages');
+        $path = $shop->shop_img;//获取原始图片路径
+        if($img = $request->file('shop_img')){
+            Storage::delete($shop->shop_img);//删除原始图片
+            $path = $img->store('public/ShopImages');
         }
 
-        //验证通过，上传数据至数据库
+        //向shops表更新商家信息
         $shop->update(
             [
-                'name' => $request->name,
-                'img' => $path,
+                'shop_category_id' => $request->shop_category_id,
+                'shop_name' => $request->shop_name,
+                'shop_rating' => $request->shop_rating,
+                'brand' => $request->brand,
+                'on_time' => $request->on_time,
+                'fengniao' => $request->fengniao,
+                'bao' => $request->bao,
+                'piao' => $request->piao,
+                'zhun' => $request->zhun,
+                'start_send' => $request->start_send,
+                'send_cost' => $request->send_cost,
+                'notice' => $request->notice,
+                'discount' => $request->discount,
+                'shop_img' => $path,
+                'status' => 1,//默认为1，管理员添加商户，默认正常
             ]
         );
 
-        //编辑商家分类功能完成，跳转页面并给出提示信息
-        return redirect()->route('shop.index')->with('success','编辑商家分类成功！');
+        //编辑商家信息功能完成，跳转页面并给出提示信息
+        return redirect()->route('shops.index')->with('success','更新商家成功！');
     }
 
     /**
@@ -200,10 +231,10 @@ class ShopsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ShopCategories $shop)
+    public function destroy(Shops $shop)
     {
         //删除商家分类数据
-        Storage::delete($shop->img);//删除图片
+        Storage::delete($shop->shop_img);//删除图片
         $shop->delete();//删除商家分类数据
 
         //删除功能完成，跳转页面并给出提示信息
