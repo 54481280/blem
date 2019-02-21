@@ -57,18 +57,15 @@
         })
     }
 
-    //编辑功能
-    function edit(id){
-        location.href='./index.php?p=Admin&c=Admin&a=adminEdit&id='+id;
-    }
 
     //删除功能
-    function del(id){
+    function del(url){
         if(confirm('确定要删除吗？')){
             $.ajax({
-                type:'get',
-                url:'./index.php?p=Admin&c=Admin&a=adminDel&id='+id,
+                type:'delete',
+                url:url,
                 success:function($data){
+                    console.log($data);
                     if($data == 1){
                         $(this).closest('tr').remove();
                         //提示
