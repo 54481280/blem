@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e95de7e6-c93d-48bc-bd05-bb359f6b2f59" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/User/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/User/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/User/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopCategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopCategoriesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/resources/views/Cate/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/Cate/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_end.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_end.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_tips.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_tips.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin.blem.com/app/Models/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/app/Models/Users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_nav.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin.blem.com/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.blem.com/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,16 +34,16 @@
         <counts>
           <entry key="css" value="5" />
           <entry key="env" value="1" />
-          <entry key="php" value="91" />
+          <entry key="php" value="101" />
           <entry key="png" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Blade" value="64" />
+          <entry key="Blade" value="69" />
           <entry key="CSS" value="5" />
           <entry key="Image" value="2" />
-          <entry key="PHP" value="27" />
+          <entry key="PHP" value="32" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -54,49 +52,21 @@
           <entry key="css" value="25" />
           <entry key="dummy" value="18" />
           <entry key="env" value="12" />
-          <entry key="php" value="7946" />
+          <entry key="php" value="8806" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Blade" value="3718" />
+          <entry key="Blade" value="3879" />
           <entry key="CSS" value="25" />
-          <entry key="PHP" value="4228" />
+          <entry key="PHP" value="4927" />
           <entry key="PLAIN_TEXT" value="30" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin.blem.com/routes/web.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/admin.blem.com/database/migrations/2019_02_22_033435_create_admins_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/Shops/index.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="53" column="58" lean-forward="true" selection-start-line="53" selection-start-column="58" selection-end-line="53" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -122,9 +92,7 @@
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/Cate/edit.blade.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_foot.blade.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_head.blade.php" />
-        <option value="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_nav.blade.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/create.blade.php" />
-        <option value="$PROJECT_DIR$/admin.blem.com/app/Models/Users.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/edit.blade.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/app/Models/Shops.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopCategoriesController.php" />
@@ -134,8 +102,13 @@
         <option value="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopsController.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_tips.blade.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/resources/views/Shops/show.blade.php" />
-        <option value="$PROJECT_DIR$/admin.blem.com/routes/web.php" />
         <option value="$PROJECT_DIR$/admin.blem.com/database/migrations/2019_02_22_033435_create_admins_table.php" />
+        <option value="$PROJECT_DIR$/admin.blem.com/resources/views/layout/_nav.blade.php" />
+        <option value="$PROJECT_DIR$/admin.blem.com/app/Models/Users.php" />
+        <option value="$PROJECT_DIR$/admin.blem.com/resources/views/User/index.blade.php" />
+        <option value="$PROJECT_DIR$/admin.blem.com/routes/web.php" />
+        <option value="$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/UsersController.php" />
+        <option value="$PROJECT_DIR$/admin.blem.com/resources/views/User/edit.blade.php" />
       </list>
     </option>
   </component>
@@ -231,9 +204,9 @@
       <path value="$PROJECT_DIR$/www.blem.com/vendor/symfony/thanks" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="838" />
-    <option name="y" value="38" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="878" />
+    <option name="y" value="42" />
     <option name="width" value="1348" />
     <option name="height" value="849" />
   </component>
@@ -287,20 +260,14 @@
               <item name="blem" type="b2602c69:ProjectViewProjectNode" />
               <item name="blem" type="462c0819:PsiDirectoryNode" />
               <item name="admin.blem.com" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blem" type="462c0819:PsiDirectoryNode" />
-              <item name="admin.blem.com" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blem" type="b2602c69:ProjectViewProjectNode" />
               <item name="blem" type="462c0819:PsiDirectoryNode" />
               <item name="admin.blem.com" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blem" type="b2602c69:ProjectViewProjectNode" />
@@ -321,8 +288,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\resources\views\Shops" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\resources\views" />
+      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\resources\views\Shops" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\resources\views\Cate" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\resources\views\layout" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\public\images" />
@@ -351,12 +318,12 @@
       <option name="presentableId" value="Default" />
       <updated>1550729817372</updated>
       <workItem from="1550729818914" duration="28923000" />
-      <workItem from="1550796686661" duration="9761000" />
+      <workItem from="1550796686661" duration="14034000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38684000" />
+    <option name="totallyTimeSpent" value="42957000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -369,11 +336,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="DB Browser" order="1" weight="0.32919255" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.3555437" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.29904053" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="1" show_stripe_button="false" />
@@ -460,13 +426,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/layout/_nav.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/layout/_head.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -485,13 +444,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="14" column="40" lean-forward="true" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin.blem.com/app/Models/Users.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -574,16 +526,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2840">
-          <caret line="266" column="66" selection-start-line="266" selection-start-column="66" selection-end-line="266" selection-end-column="66" />
-          <folding>
-            <element signature="e#40#70#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/Shops/show.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -598,20 +540,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/Shops/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="53" column="58" lean-forward="true" selection-start-line="53" selection-start-column="58" selection-end-line="53" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin.blem.com/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin.blem.com/database/migrations/2019_02_21_062159_create_users_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
@@ -623,6 +551,68 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/layout/_nav.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="90" selection-start-line="6" selection-start-column="90" selection-end-line="6" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/Shops/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/app/Models/Users.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="19" column="53" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/User/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="28" column="100" selection-start-line="28" selection-start-column="100" selection-end-line="28" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="25" column="70" selection-start-line="25" selection-start-column="70" selection-end-line="25" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/ShopsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="117" column="22" lean-forward="true" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
+          <folding>
+            <element signature="e#40#70#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/resources/views/User/edit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin.blem.com/app/Http/Controllers/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1922">
+          <caret line="95" column="38" selection-start-line="95" selection-start-column="38" selection-end-line="95" selection-end-column="38" />
+          <folding>
+            <element signature="e#40#61#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

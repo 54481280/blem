@@ -15,4 +15,8 @@ class Users extends Model
         'status',
         'shop_id',
     ];
+
+    public function shops(){
+        return $this->belongsTo(Shops::class,'shop_id');
+    }
 }

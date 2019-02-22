@@ -23,6 +23,8 @@ Route::get('shops/{shop}/status/','ShopsController@status')->name('shops.status'
 
 //定义商家用户路由
 Route::resource('user','UsersController');
+Route::get('user/{user}/status/','UsersController@status')->name('user.status');//商家账户状态路由
+
 
 //定义管理员资源路由
 Route::resource('admin','AdminController');
