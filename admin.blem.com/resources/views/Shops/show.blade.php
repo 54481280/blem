@@ -1,21 +1,66 @@
 @extends('layout.form')
 @section('content')
-   <p>{{$shop->shop_name}}</p>
-   <p>{{$shop->cate->name}}</p>
-   <p><img src="{{$shop->img()}}" width="100" height="100"/> </p>
-   <p>{{$shop->shop_rating}}</p>
-   <p>{{$shop->brand}}</p>
-   <p>{{$shop->on_time}}</p>
-   <p>{{$shop->fengniao}}</p>
-   <p>{{$shop->bao}}</p>
-   <p>{{$shop->piao}}</p>
-   <p>{{$shop->zhun}}</p>
-   <p>{{$shop->start_send}}</p>
-   <p>{{$shop->send_cost}}</p>
-   <p>{{$shop->notice}}</p>
-   <p>{{$shop->discount}}</p>
-   <p>{{$shop->status}}</p>
-   <p>{{$shop->updated_at}}</p>
-   <p>{{$shop->created_at}}</p>
+   <div class="table-responsive">
+      <style>
+         td{
+            text-align: left;
+         }
+         .name{
+            text-align: right;
+         }
+         .infoShow{
+            color: #999;
+            font-size: 20px;
+            display: block;
+            line-height: 120px;
+         }
+         .shops,.shops td{
+            height: 120px;
+         }
+      </style>
+      <div class="alert alert-info" role="alert">
+      <table class="table table-hover">
+         <tr class="shops">
+            <td class="name"><h2>商家：</h2></td>
+            <td class="infoShow">{{$shop->shop_name}}<sup>评分:{{$shop->shop_rating}}</sup></td>
+            <td colspan="5"><img src="{{$shop->img()}}" width="100" height="100"/></td>
+         </tr>
+         <tr>
+            <td class="name"><h3>是否品牌：</h3></td>
+            <td>@if($shop->brand)<span class="glyphicon glyphicon-ok"></span>@else<span class="glyphicon glyphicon-remove"></span>@endif</td>
+            <td><h3>是否准时送达：</h3></td>
+            <td>@if($shop->on_time)<span class="glyphicon glyphicon-ok"></span>@else<span class="glyphicon glyphicon-remove"></span>@endif</td>
+            <td><h3>是否蜂鸟配送：</h3></td>
+            <td>@if($shop->fengniao)<span class="glyphicon glyphicon-ok"></span>@else<span class="glyphicon glyphicon-remove"></span>@endif</td>
+         </tr>
+         <tr>
+            <td class="name"><h3>是否保标记：</h3></td>
+            <td>@if($shop->bao)<span class="glyphicon glyphicon-ok"></span>@else<span class="glyphicon glyphicon-remove"></span>@endif</td>
+            <td><h3>是否票标记：</h3></td>
+            <td>@if($shop->piao)<span class="glyphicon glyphicon-ok"></span>@else<span class="glyphicon glyphicon-remove"></span>@endif</td>
+            <td><h3>是否准标记：</h3></td>
+            <td>@if($shop->zhun)<span class="glyphicon glyphicon-ok"></span>@else<span class="glyphicon glyphicon-remove"></span>@endif</td>
+         </tr>
+         <tr>
+            <td class="name"><h3>起送金额：</h3></td>
+            <td><span class="glyphicon glyphicon-jpy"></span>{{$shop->start_send}}</td>
+            <td><h3>配送费：</h3></td>
+            <td colspan="3"><span class="glyphicon glyphicon-jpy">{{$shop->send_cost}}</td>
+         </tr>
+         <tr>
+            <td class="name"><h3>店公告：</h3></td>
+            <td>{{$shop->notice}}</td>
+            <td><h3>优惠信息：</h3></td>
+            <td colspan="3">{{$shop->discount}}</td>
+         </tr>
+         <tr>
+            <td class="name"><h3>更新时间：</h3></td>
+            <td>{{$shop->updated_at}}</td>
+            <td><h3>入驻时间：</h3></td>
+            <td colspan="3">{{$shop->created_at}}</td>
+         </tr>
+      </table>
+   </div>
+   </div>
 @stop
 @include('layout._showImg')

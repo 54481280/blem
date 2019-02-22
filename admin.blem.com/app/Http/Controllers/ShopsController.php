@@ -240,4 +240,30 @@ class ShopsController extends Controller
         //删除功能完成，跳转页面并给出提示信息
         return redirect()->route('shop.index')->with('success','删除商家分类成功！');
     }
+
+    //商家状态功能
+    public function status(Shops $shop){
+        if($shop->status == 0){
+            $status = 1;//如果该商家还未通过审核，就更新为启用
+            $info = 'success';
+            $str = '商家审核成功！';
+        }
+        if($shop->status == 1){
+            $status = -1;//如果该商家已启用，更新为禁用
+            $info = 'warning';
+            $str = '商家已禁用！';
+        }
+        if($shop->status == -1){
+            $status = 1;//如果该商家为禁用的话，更新为启用
+            $info = 'success';
+            $str = '商家启用成功！';
+        }
+
+        //更新
+        $shop->status = $status;
+        $shop->save();
+
+        //更新成功，跳转页面，给出提示
+        return redirect()->route('shops.index')->with($info,$str);
+    }
 }

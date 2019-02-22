@@ -151,4 +151,17 @@ class ShopCategoriesController extends Controller
         //删除功能完成，跳转页面并给出提示信息
         return redirect()->route('shop.index')->with('success','删除商家分类成功！');
     }
+
+    //商家分类状态功能
+    public function status(ShopCategories $shop){
+        $status = $shop->status ? 0 : 1; //如果状态为显示就更改为隐藏，反之......
+        $str = $shop->status ? '隐藏商家分类成功' : '显示商家分类成功';
+
+        $shop->update([
+            'status' => $status,
+        ]);
+
+        //操作完成，跳转页面并给出提示
+        return redirect()->route('shop.index')->with('success',$str);
+    }
 }
