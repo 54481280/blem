@@ -125,8 +125,38 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+
+
+    public function destroy(Admin $admin,Request $request)
+    {//修改密码功能
+        //验证表单数据
+        $this->validate($request,
+            [
+                'oldPwd' => 'required',
+                'password' => 'required',
+                'password2' => 'required|same:password',
+                'captcha' => 'required|captcha',
+            ],[
+                'oldPwd.required' => '原始密码不能为空',
+                'password.required' => '新密码不能为空',
+                'password2.required' => '原始密码不能为空',
+                'password2.same' => '两次密码输入不一致，请重新输入',
+                'captcha.required' => '验证码不能为空',
+                'captcha.captcha' => '验证码输入错误',
+            ]);
+
+        //验证原始密码是否正确
+        if(Hash::check($request->oldPwd,$admin->password)){
+            //密码相同
+            $admin->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }else{
+            return back()->with('danger','原始密码输入错误');
+        }
+
+        //修改密码成功
+        return redirect()->route('admin.index')->with('success','修改个人密码成功！');
+
     }
 }

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/','ShopCategoriesController@index');
+Route::get('/','LoginController@index');
 
 //定义商家分类路由
 Route::resource('shop','ShopCategoriesController');

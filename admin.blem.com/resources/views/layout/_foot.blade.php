@@ -3,6 +3,11 @@
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script>
+    $('#upPwd').on('click',function(){
+        $(this).hide();
+        $('#upPwdForm').show();
+    })
+
     //二级菜单
     $('#on_set').on('click',function(){
         $('#set').toggle();

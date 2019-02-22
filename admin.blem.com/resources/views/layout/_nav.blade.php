@@ -20,7 +20,7 @@
             <li style="position: relative">
                 <a href="#" id="on_set"><span class="glyphicon glyphicon-cog"></span></a>
                 <ul class="set" id="set" style="left: -80px">
-                    <li><a href="" class="set_a" style="font-size: 15px;background-color:#8CBFC7;display: block;width:200px;height: 100%;color: #333;text-decoration: none;"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
+                    <li><a href="{{route('admin.show',[\Illuminate\Support\Facades\Auth::user()->id])}}" class="set_a" style="font-size: 15px;background-color:#8CBFC7;display: block;width:200px;height: 100%;color: #333;text-decoration: none;"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
                     <li><a href="{{route('logout')}}" class="set_a" style="font-size: 15px;background-color:#8CBFC7;display: block;width:200px;height: 100%;color: #333;text-decoration: none;"><span class="glyphicon glyphicon-log-in"></span> 退出登录</a></li>
                 </ul>
             </li>
