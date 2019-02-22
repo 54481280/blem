@@ -5,7 +5,7 @@
             <li><span class="glyphicon glyphicon-align-justify"></span><a href="{{route('shop.index')}}">商家分类管理</a></li>
             <li><span class="glyphicon glyphicon-tags"></span><a href="{{route('shops.index')}}">商家信息管理</a></li>
             <li><span class="glyphicon glyphicon-user"></span><a href="{{route('user.index')}}">商家账户管理</a></li>
-            <li><span class="glyphicon glyphicon-object-align-left"></span><a href="./index.php?p=Admin&c=Goods&a=goodsList">产品管理</a></li>
+            <li><span class="glyphicon glyphicon-education"></span><a href="{{route('admin.index')}}">管理员管理</a></li>
             <li><span class="glyphicon glyphicon-option-horizontal"></span><a href="#">其他管理</a></li>
         </ul>
     </div>
@@ -17,7 +17,13 @@
             <li><a href="#">
                     <img src="/images/00.jpg" alt="加载中..." width="40" class="img-circle" title="用户名">
                 </a></li>
-            <li title="退出登录"><a href="#" data-toggle="modal" data-target="#logout"><span class="glyphicon glyphicon-cog"></span></a></li>
+            <li style="position: relative">
+                <a href="#" id="on_set"><span class="glyphicon glyphicon-cog"></span></a>
+                <ul class="set" id="set" style="left: -80px">
+                    <li><a href="" class="set_a" style="font-size: 15px;background-color:#8CBFC7;display: block;width:200px;height: 100%;color: #333;text-decoration: none;"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
+                    <li><a href="{{route('logout')}}" class="set_a" style="font-size: 15px;background-color:#8CBFC7;display: block;width:200px;height: 100%;color: #333;text-decoration: none;"><span class="glyphicon glyphicon-log-in"></span> 退出登录</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="row content">

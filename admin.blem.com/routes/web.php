@@ -25,6 +25,11 @@ Route::get('shops/{shop}/status/','ShopsController@status')->name('shops.status'
 Route::resource('user','UsersController');
 Route::get('user/{user}/status/','UsersController@status')->name('user.status');//商家账户状态路由
 
-
 //定义管理员资源路由
 Route::resource('admin','AdminController');
+
+//定义登录路由
+Route::get('login','LoginController@index')->name('login');//登录页面
+Route::post('login','LoginController@login')->name('login');//登录功能
+Route::get('logout','LoginController@logout')->name('logout');//退出登录功能
+

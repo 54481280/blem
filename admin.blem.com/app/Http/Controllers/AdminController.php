@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -13,7 +15,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        //管理员列表
+        $rows = Admin::all();//获取所有管理员数据
+
+        return view('Admin.index',compact('rows'));
     }
 
     /**
@@ -23,7 +28,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        //添加管理员表单
+        return view('Admin.create');
     }
 
     /**
@@ -34,7 +40,31 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //添加管理员功能
+        $this->validate($request,
+            [
+                'name' => 'required',//用户名不能为空
+                'email' => 'required|email',//邮箱
+                'password' => 'required',//密码不能为空
+                'password2' => 'required|same:password',//重复密码不能为空且要相同
+            ],[
+                'name.required' => '管理员账号不能为空',
+                'email.required' => '管理员邮箱不能为空',
+                'email.email' => '管理员邮箱格式不正确',
+                'password.required' => '管理员密码不能为空',
+                'password2.required' => '管理员重复密码不能为空',
+                'password2.same' => '两次密码不一致，请重新输入',
+            ]);
+
+        //验证通过，将数据写入数据库
+        Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        //添加功能完成，跳转页面及给出提示信息
+        return redirect()->route('admin.index')->with('success','添加管理员成功！');
     }
 
     /**
@@ -45,7 +75,9 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $admin = Admin::find($id);
+        //个人详情页面
+        return view('admin.show',compact('admin'));
     }
 
     /**
@@ -54,9 +86,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Admin $admin)
     {
-        //
+        //管理员编辑表单
+        return view('Admin.edit',compact('admin'));
     }
 
     /**
@@ -66,9 +99,24 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Admin $admin)
     {
-        //
+        //管理员编辑功能
+        $this->validate($request,
+            [
+                'email' => 'required|email',//邮箱
+            ],[
+                'email.required' => '管理员邮箱不能为空',
+                'email.email' => '管理员邮箱格式不正确',
+            ]);
+
+        //验证通过，将数据写入数据库
+        $admin->update([
+            'email' => $request->email,
+        ]);
+
+        //更新功能完成，跳转页面及给出提示信息
+        return redirect()->route('admin.index')->with('success','更新管理员成功！');
     }
 
     /**
