@@ -34,4 +34,5 @@ class Shops extends Model
     public function cate(){
         return $this->belongsTo(ShopCategories::class,'shop_category_id');
     }
+
 }

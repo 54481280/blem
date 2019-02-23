@@ -24,9 +24,9 @@
                     <div id="dropdown-element" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
-                                <li><a href="ui-kits/theming.html">分类列表</a>
+                                <li><a href="{{route('menus.index')}}">分类列表</a>
                                 </li>
-                                <li><a href="ui-kits/grid.html">新增菜品分类</a>
+                                <li><a href="{{route('menus.create')}}">新增菜品分类</a>
                                 </li>
                             </ul>
                         </div>
@@ -124,3 +124,12 @@
         <!-- /.navbar-collapse -->
     </nav>
 </div>
+
+
+<div class="container-fluid">
+    <div class="side-body">
+        <div class="row nonediv">
+            <div class="col-xs-12">
+                <div class="card">
+                    @include('layout._error'){{--提示--}}
+                    @include('layout._tips')

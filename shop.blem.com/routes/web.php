@@ -22,3 +22,9 @@ Route::resource('user','UserController');
 Route::get('login','LoginController@index')->name('login');//登录页面
 Route::post('login','LoginController@login')->name('login');//登录功能
 Route::get('logout','LoginController@logout')->name('logout');//退出登录功能
+
+//定义菜品分类资源路由
+Route::resource('menus','MenuCategoriesController');
+
+//定义菜品资源路由
+Route::resource('menu','MenuController');
