@@ -28,3 +28,4 @@ Route::resource('menus','MenuCategoriesController');
 
 //定义菜品资源路由
 Route::resource('menu','MenuController');
+Route::get('menu/{menu}/status','MenuController@status')->name('status');

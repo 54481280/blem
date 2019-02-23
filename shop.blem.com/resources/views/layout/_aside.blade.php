@@ -40,9 +40,9 @@
                     <div id="dropdown-table" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
-                                <li><a href="table/table.html">菜品列表</a>
+                                <li><a href="{{route('menu.index')}}">菜品列表</a>
                                 </li>
-                                <li><a href="table/datatable.html">新增菜品</a>
+                                <li><a href="{{route('menu.create')}}">新增菜品</a>
                                 </li>
                             </ul>
                         </div>
