@@ -31,9 +31,18 @@ class LoginController extends Controller
             'name' => $request->name,
             'password' => $request->password,
         ],$request->has('rember'))){
+
+            //判断用户是否被禁用
+            if(!Auth::user()->status){
+                Auth::logout();//清除session数据
+                return back()->with('danger','用户未激活，登录失败！');
+            }
+
             //登录成功,跳转页面，并给出提示信息
             return redirect()->route('user.index')->with('success','登录成功！');
         }
+
+
 
         //登录失败
         return back()->with('danger','用户名或密码错误，登录失败！');
