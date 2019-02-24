@@ -21,8 +21,7 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
-
-//        dd($request->id);
+        $data = ['id'=>$request->id];
         //原始查询
         $rows = Menu::where('shop_id',Auth::user()->id)
             ->where('category_id',$request->id);
@@ -31,21 +30,27 @@ class MenuController extends Controller
         if($keyword = $request->keyword){
             $rows = $rows
                 ->where('goods_name','like',"%{$keyword}%");
+
+            $data['keyword'] = $request->keyword;
         }
         //如果有最小
         if($min = $request->min){
             $rows = $rows
                 ->where('goods_price','>=',$min);
+
+            $data['min'] = $request->min;
         }
         //如果有最大
         if($max = $request->max){
             $rows = $rows
                 ->where('goods_price','<=',$max);
+
+            $data['max'] = $request->max;
         }
         //最后查询
-        $rows = $rows->paginate(1);
+        $rows = $rows->paginate(5);
         //菜品分类列表
-        return view('Menu.index',compact('rows','request'));
+        return view('Menu.index',compact('rows','data','request'));
     }
 
     /**
@@ -56,7 +61,7 @@ class MenuController extends Controller
     public function create()
     {
         //获取所有菜品分类
-        $rows = MenuCategories::all();
+        $rows = MenuCategories::all()->where('shop_id',Auth::user()->id);
         //添加表单页面
         return view('menu.create',compact('rows'));
     }
@@ -113,7 +118,7 @@ class MenuController extends Controller
         ]);
 
         //添加成功
-        return redirect()->route('menu.index')->with('success','新增菜品成功！');
+        return redirect()->route('menu.index',['id'=>$request->category_id])->with('success','新增菜品成功！');
     }
 
     /**
@@ -190,7 +195,7 @@ class MenuController extends Controller
         ]);
 
         //添加成功
-        return redirect()->route('menu.index')->with('success','更新菜品成功！');
+        return redirect()->route('menu.index',['id'=>$request->category_id])->with('success','更新菜品成功！');
     }
 
     /**
@@ -201,10 +206,12 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        $category_id = $menu->category_id;
+
         //删除
         $menu->delete();
 
-        return redirect()->route('menu.index')->with('success','删除菜品成功！');
+        return redirect()->back('menu.index')->with('success','删除菜品成功！');
     }
 
     public function status(Menu $menu){
@@ -222,7 +229,7 @@ class MenuController extends Controller
             'status' => $status,
         ]);
 
-        return redirect()->route('menu.index')->with('success',$str);
+        return redirect()->route('menu.index',['id'=>$menu->category_id])->with('success',$str);
 
     }
 }

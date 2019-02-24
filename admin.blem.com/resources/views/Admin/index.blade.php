@@ -1,5 +1,13 @@
 @extends('layout.list')
 @section('CreateUrl'){{route('admin.create')}}@stop
+@section('CreateStr')新增管理员@stop{{--添加语--}}
+@section('logo_search') glyphicon-education @stop{{--图标--}}
+@section('SearchUrl'){{route('admin.index')}}@stop{{--搜索链接--}}
+@section('Search')搜索管理员@stop{{--提示语--}}
+@section('path'){{--页面位置--}}
+<li><a href="#">管理员管理</a></li>
+<li><a href="#">管理员列表</a></li>
+@stop
 @section('content')
 @include('layout._tips')
 <table class="table table-hover" id="list">

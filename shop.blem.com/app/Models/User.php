@@ -20,4 +20,6 @@ class User extends Authenticatable
     public function shops(){
         return $this->belongsTo(Shops::class,'shop_id');
     }
+
+
 }

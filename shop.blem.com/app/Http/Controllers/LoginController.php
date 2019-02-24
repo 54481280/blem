@@ -36,12 +36,12 @@ class LoginController extends Controller
             'password' => $request->password,
             'status' => 1,
         ],$request->has('rember'))){
+            if(!User::where('name',$request->name)->first()->status)
+                return back()->with('danger','账号被禁用，请联系管理员，登录失败！');
+
             //登录成功,跳转页面，并给出提示信息
             return redirect()->route('user.index')->with('success','登录成功！');
         }
-
-        if(!User::where('name',$request->name)->first()->status)
-            return back()->with('danger','账号被禁用，请联系管理员，登录失败！');
 
         //登录失败
         return back()->with('danger','用户名或密码错误，登录失败！');

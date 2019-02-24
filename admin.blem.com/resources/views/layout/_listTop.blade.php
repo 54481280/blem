@@ -1,18 +1,19 @@
 <div class="col-md-12 act">
     <div style="float: left">
-        <button type="button" class="btn btn-info" onclick="location.href='@yield('CreateUrl')';"> 添加管理员 </button>
+        <button type="button" class="btn btn-info" onclick="location.href='@yield('CreateUrl')';"> @yield('CreateStr') </button>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal"> 批量删除 </button>
     </div>
     <div style="float: left;margin-left: 20%">
-        <form class="form-inline" action="adminList" method="post">
+        <form class="form-inline" action="@yield('SearchUrl')" method="get">
             <div class="form-group">
-                <label class="sr-only" for="exampleInputAmount">搜索管理员</label>
+                <label class="sr-only" for="exampleInputAmount">@yield('Search')</label>
                 <div class="input-group">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span> </div>
-                    <input type="text" class="form-control" name="key" style="width: 400px;" id="exampleInputAmount" placeholder="请输入管理员名称">
+                    <div class="input-group-addon"><span class="glyphicon @yield('logo_search')"></span> </div>
+                    <input type="text" class="form-control" name="keyword" style="width: 400px;" id="exampleInputAmount" placeholder="@yield('Search')">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">搜索管理员</button>
+            {{csrf_field()}}
+            <button type="submit" class="btn btn-primary">@yield('Search')</button>
         </form>
     </div>
     <div style="float: right;">

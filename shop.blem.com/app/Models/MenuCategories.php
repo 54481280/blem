@@ -18,6 +18,6 @@ class MenuCategories extends Model
 
     //返回所有菜品分类
     public static function cate(){
-        return MenuCategories::all()->where('shop_id',Auth::user()->id);
+        return MenuCategories::all()->where('shop_id',Auth::user()->id)->where('shop_id',Auth::user()->id);
     }
 }

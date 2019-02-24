@@ -1,4 +1,8 @@
 @extends('layout.form')
+@section('path'){{--页面位置--}}
+<li><a href="#">商家分类管理</a></li>
+<li><a href="#">增加商家分类</a></li>
+@stop
 @section('content')
 @include('layout._error')
     <form action="{{route('shop.store')}}" method="post" enctype="multipart/form-data">

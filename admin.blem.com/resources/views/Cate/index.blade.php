@@ -1,7 +1,17 @@
 @extends('layout.list')
-@section('CreateUrl'){{route('shop.create')}}@stop
+@section('CreateUrl'){{route('shop.create')}}@stop{{--添加链接--}}
+@section('CreateStr')新增商家分类@stop{{--添加语--}}
+@section('logo_search') glyphicon-align-justify @stop{{--图标--}}
+@section('SearchUrl'){{route('shop.index')}}@stop{{--搜索链接--}}
+@section('Search')搜索商家分类@stop{{--提示语--}}
+@section('path'){{--页面位置--}}
+    <li><a href="#">商家分类管理</a></li>
+    <li><a href="#">商家分类列表</a></li>
+@stop
+
 @section('content')
 @include('layout._tips')
+
     <table class="table table-hover" id="list">
         <tr>
             <th><input type="checkbox" name="ids" id="ids" value="0"> 序号</th>

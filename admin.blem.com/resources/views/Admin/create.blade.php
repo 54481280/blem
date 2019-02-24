@@ -1,4 +1,8 @@
 @extends('layout.form')
+@section('path'){{--页面位置--}}
+<li><a href="#">管理员管理</a></li>
+<li><a href="#">添加管理员</a></li>
+@stop
 @section('content')
 @include('layout._error')
     <form action="{{route('admin.store')}}" method="post" enctype="multipart/form-data">

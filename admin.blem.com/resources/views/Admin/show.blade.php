@@ -1,4 +1,8 @@
 @extends('layout.form')
+@section('path'){{--页面位置--}}
+<li><a href="#">管理员管理</a></li>
+<li><a href="#">管理员个人中心</a></li>
+@stop
 @section('content')
 @include('layout._error')
 @include('layout._tips')

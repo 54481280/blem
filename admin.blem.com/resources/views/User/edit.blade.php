@@ -1,4 +1,9 @@
 @extends('layout.form')
+@section('path'){{--页面位置--}}
+<li><a href="#">商家账户管理</a></li>
+<li><a href="#">商家账户列表</a></li>
+<li><a href="#">重置商家账户密码</a></li>
+@stop
 @section('content')
 @include('layout._error')
     <form action="{{route('user.update',[$user])}}" method="post" enctype="multipart/form-data">

@@ -90,7 +90,7 @@
                 </table>
 
                     <div style="float: right">
-                        {{--{{$rows->appends(['keyword'=>$keyword])->links()}}--}}
+                        {{$rows->appends($data)->links()}}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,13 @@
 @extends('layout.list')
-@section('CreateUrl'){{route('shop.create')}}@stop
+@section('CreateUrl'){{route('shops.create')}}@stop
+@section('CreateStr')新增商家@stop{{--添加语--}}
+@section('logo_search') glyphicon-user @stop{{--图标--}}
+@section('SearchUrl'){{route('user.index')}}@stop{{--搜索链接--}}
+@section('Search')搜索商家账号@stop{{--提示语--}}
+@section('path'){{--页面位置--}}
+<li><a href="#">商家账号管理</a></li>
+<li><a href="#">商家账号列表</a></li>
+@stop
 @section('content')
 @include('layout._tips')
     <table class="table table-hover" id="list">

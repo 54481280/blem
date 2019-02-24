@@ -1,4 +1,8 @@
 @extends('layout.form')
+@section('path'){{--页面位置--}}
+<li><a href="#">商家信息管理</a></li>
+<li><a href="#">更新商家信息</a></li>
+@stop
 @section('content')
     <form action="{{route('shops.update',[$shop])}}" method="post" enctype="multipart/form-data" style="height: 600px;overflow-y:scroll;">
         @include('layout._error')

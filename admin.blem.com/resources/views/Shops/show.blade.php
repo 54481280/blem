@@ -1,4 +1,9 @@
 @extends('layout.form')
+@section('path'){{--页面位置--}}
+<li><a href="#">商家信息管理</a></li>
+<li><a href="#">商家信息列表</a></li>
+<li><a href="#">商家信息详情</a></li>
+@stop
 @section('content')
    <div class="table-responsive">
       <style>

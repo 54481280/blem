@@ -30,6 +30,6 @@
         <div class="col-md-12" style="margin-top:20px">
             <ol class="breadcrumb">
                 <li><a href="#">后台系统</a></li>
-                <li><a href="#">管理员管理</a></li>
+                @yield('path')
             </ol>
         </div>

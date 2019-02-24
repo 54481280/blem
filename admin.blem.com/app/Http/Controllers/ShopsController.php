@@ -19,10 +19,10 @@ class ShopsController extends Controller
      */
     public function index(Request $request)
     {
-        $rows = Shops::paginate(2);//获取分页数据
+        $rows = Shops::paginate(5);//获取分页数据
 
         if($keyword = $request->keyword){
-            $rows = Shops::where('shop_name','like',"%{$keyword}%")->paginate(1);//获取查询分页数据
+            $rows = Shops::where('shop_name','like',"%{$keyword}%")->paginate(5);//获取查询分页数据
         }
 
         return view('Shops.index',compact('rows','keyword'));//返回页面及数据
@@ -124,6 +124,7 @@ class ShopsController extends Controller
             DB::commit();//正确，提交数据
         }catch (\Exception $e){
             DB::rollBack();//出错，取消事务提交（回滚）
+            return redirect()->back()->with('danger','添加商家出错！');
         }
 
         //添加商家功能完成，跳转页面并给出提示信息
