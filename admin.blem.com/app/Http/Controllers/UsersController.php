@@ -93,6 +93,6 @@ class UsersController extends Controller
         $user->save();
 
         //更新成功，跳转页面，给出提示
-        return redirect()->route('user.index')->with($info,$str);
+        return redirect()->back()->with($info,$str);
     }
 }

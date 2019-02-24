@@ -19,6 +19,7 @@
                         <form action="{{route('menu.index')}}" method="get" class="form-inline">
                             <div class="form-group">
                                 <button class="btn btn-info">价格区间</button>
+                                <input type="hidden" name="id" value="{{$request->id}}">
                                 <input type="text" class="form-control"  name="min" id="" placeholder="请输入价格（最低价格）">
                                 <input type="text" class="form-control" name="max" id="" placeholder="请输入价格（最高价格）">
                                 <input type="text" class="form-control" style="margin-left: 20px" name="keyword" id="exampleInputEmail2" placeholder="请输入菜品名称">
@@ -59,7 +60,7 @@
                         <tr>
                             <td>{{$row->goods_name}}</td>
                             <td><img src="{{$row->goods_img}}" width="60" height="60"/> </td>
-                            <td>{{$row->category_id}}</td>
+                            <td>{{$row->Catemenus->name}}</td>
                             <td>{{$row->goods_price}}</td>
                             <td>{{$row->month_sales}}</td>
                             <td>{{$row->rating_count}}</td>
@@ -89,7 +90,7 @@
                 </table>
 
                     <div style="float: right">
-                        {{$rows->appends(['keyword'=>$keyword])->links()}}
+                        {{--{{$rows->appends(['keyword'=>$keyword])->links()}}--}}
                     </div>
                 </div>
             </div>

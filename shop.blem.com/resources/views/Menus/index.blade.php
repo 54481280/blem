@@ -16,7 +16,7 @@
                         <button class="btn btn-success" onclick="location.href='{{route('menus.create')}}'"><span class="icon fa fa-plus"></span> 新增菜品分类</button>
                     </div>
                     <div class="col-md-3">
-                        <form action="{{route('menus.index')}}" method="get" class="form-inline">
+                        <form action="{{--{{route('menus.index',['id'=>$requret->id])}}--}}" method="get" class="form-inline">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="keyword" id="exampleInputEmail2" placeholder="请输入菜品分类名称">
                             </div>

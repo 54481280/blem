@@ -31,6 +31,7 @@ class CreateShopsTable extends Migration
             $table->string('discount');               //优惠信息
             $table->integer('status');                //状态:1正常,0待审核,-1禁用
             $table->timestamps();
+            $table->engine('InnoDB');
         });
     }
 

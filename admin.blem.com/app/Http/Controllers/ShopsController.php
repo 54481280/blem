@@ -92,40 +92,37 @@ class ShopsController extends Controller
 
         //验证通过，上传商家信息数据至数据库
         DB::beginTransaction();//开启事务
-
         //先向shops表添加商家信息
-        $result1 = Shops::create(
-            [
-                'shop_category_id' => $request->shop_category_id,
-                'shop_name' => $request->shop_name,
-                'shop_rating' => $request->shop_rating,
-                'brand' => $request->brand,
-                'on_time' => $request->on_time,
-                'fengniao' => $request->fengniao,
-                'bao' => $request->bao,
-                'piao' => $request->piao,
-                'zhun' => $request->zhun,
-                'start_send' => $request->start_send,
-                'send_cost' => $request->send_cost,
-                'notice' => $request->notice,
-                'discount' => $request->discount,
-                'shop_img' => $path,
-                'status' => 1,//默认为1，管理员添加商户，默认正常
-            ]
-        );
-
-        //向商家用户表写入信息
-        $result2 = Users::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'status' => 1,//管理员添加默认为1，启用
-            'shop_id' => $result1->id,
-        ]);
-
-        if($result1 && $result2){
+        try{
+            $result1 = Shops::create(
+                [
+                    'shop_category_id' => $request->shop_category_id,
+                    'shop_name' => $request->shop_name,
+                    'shop_rating' => $request->shop_rating,
+                    'brand' => $request->brand,
+                    'on_time' => $request->on_time,
+                    'fengniao' => $request->fengniao,
+                    'bao' => $request->bao,
+                    'piao' => $request->piao,
+                    'zhun' => $request->zhun,
+                    'start_send' => $request->start_send,
+                    'send_cost' => $request->send_cost,
+                    'notice' => $request->notice,
+                    'discount' => $request->discount,
+                    'shop_img' => $path,
+                    'status' => 1,//默认为1，管理员添加商户，默认正常
+                ]
+            );
+            //向商家用户表写入信息
+            Users::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'status' => 1,//管理员添加默认为1，启用
+                'shop_id' => $result1->id,
+            ]);
             DB::commit();//正确，提交数据
-        } else{
+        }catch (\Exception $e){
             DB::rollBack();//出错，取消事务提交（回滚）
         }
 

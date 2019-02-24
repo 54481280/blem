@@ -4,7 +4,6 @@
     <div class="container-fluid">
         <div class="side-body padding-top">
             <div class="row">
-                @include('layout._tips'){{--提示信息--}}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <a href="#">
                         <div class="card red summary-inline">

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->integer('shop_id');//所属商家
             $table->rememberToken();//token
             $table->timestamps();
+            $table->engine('InnoDB');
         });
     }
 

@@ -40,8 +40,9 @@
                     <div id="dropdown-table" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
-                                <li><a href="{{route('menu.index')}}">菜品列表</a>
-                                </li>
+                                @foreach(\App\Models\MenuCategories::cate() as $cate)
+                                    <li><a href="{{route('menu.index',['id'=>$cate])}}">{{$cate->name}}</a></li>
+                                @endforeach
                                 <li><a href="{{route('menu.create')}}">新增菜品</a>
                                 </li>
                             </ul>
@@ -131,5 +132,5 @@
         <div class="row nonediv">
             <div class="col-xs-12">
                 <div class="card">
-                    @include('layout._error'){{--提示--}}
-                    @include('layout._tips')
+@include('layout._error'){{--提示--}}
+@include('layout._tips')

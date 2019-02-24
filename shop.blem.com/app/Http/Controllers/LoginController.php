@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,6 +10,9 @@ class LoginController extends Controller
 {
     //登录页面
     public function index(){
+        if(Auth::user()){
+            return redirect()->route('user.index')->with('success','欢迎回来！');
+        }
         return view('Login.index');
     }
 
@@ -30,19 +34,14 @@ class LoginController extends Controller
         if(Auth::attempt([
             'name' => $request->name,
             'password' => $request->password,
+            'status' => 1,
         ],$request->has('rember'))){
-
-            //判断用户是否被禁用
-            if(!Auth::user()->status){
-                Auth::logout();//清除session数据
-                return back()->with('danger','用户未激活，登录失败！');
-            }
-
             //登录成功,跳转页面，并给出提示信息
             return redirect()->route('user.index')->with('success','登录成功！');
         }
 
-
+        if(!User::where('name',$request->name)->first()->status)
+            return back()->with('danger','账号被禁用，请联系管理员，登录失败！');
 
         //登录失败
         return back()->with('danger','用户名或密码错误，登录失败！');

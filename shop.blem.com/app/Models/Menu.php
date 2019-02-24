@@ -23,5 +23,9 @@ class Menu extends Model
         'status',
     ];
 
+    public function Catemenus(){
+        return $this->belongsTo(MenuCategories::class,'category_id');
+    }
+
 
 }

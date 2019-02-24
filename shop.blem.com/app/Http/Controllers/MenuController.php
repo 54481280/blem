@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,13 +21,31 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
-        $rows = Menu::paginate(1);//获取分页数据
 
+//        dd($request->id);
+        //原始查询
+        $rows = Menu::where('shop_id',Auth::user()->id)
+            ->where('category_id',$request->id);
+
+        //如果有名称查询
         if($keyword = $request->keyword){
-            $rows = Menu::where('goods_name','like',"%{$keyword}%")->paginate(1);//获取查询分页数据
+            $rows = $rows
+                ->where('goods_name','like',"%{$keyword}%");
         }
+        //如果有最小
+        if($min = $request->min){
+            $rows = $rows
+                ->where('goods_price','>=',$min);
+        }
+        //如果有最大
+        if($max = $request->max){
+            $rows = $rows
+                ->where('goods_price','<=',$max);
+        }
+        //最后查询
+        $rows = $rows->paginate(1);
         //菜品分类列表
-        return view('Menu.index',compact('rows','keyword'));
+        return view('Menu.index',compact('rows','request'));
     }
 
     /**
@@ -193,8 +215,6 @@ class MenuController extends Controller
         if($menu->status){//禁用
             $status = 0;
             $str = '禁用成功';
-        }else{
-
         }
 
         //修改状态数据

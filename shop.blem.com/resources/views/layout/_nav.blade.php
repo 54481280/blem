@@ -70,7 +70,7 @@
                             <h4 class="username">{{auth()->user()->name}}</h4>
                             <p>{{auth()->user()->email}}</p>
                             <div class="btn-group margin-bottom-2x" role="group">
-                                <button type="button" class="btn btn-default" onclick="location.href='{{route('user.show',[auth()->user()])}}'"><i class="fa fa-user"></i> 个人中心</button>
+                                <button type="button" class="btn btn-default" onclick="location.href='{{route('user.show')}}'"><i class="fa fa-user"></i> 个人中心</button>
                                 <button type="button" class="btn btn-default" onclick="location.href='{{route('logout')}}'"><i class="fa fa-sign-out"></i> 退出登录</button>
                             </div>
                         </div>

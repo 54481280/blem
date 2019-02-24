@@ -24,10 +24,7 @@
                         <div>
                             <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="请输入菜品分类名称">
                         </div>
-                        <div class="sub-title">菜品编号</div>
-                        <div>
-                            <input type="text" class="form-control" name="type_accumulation" value="{{old('type_accumulation')}}" placeholder="请输入菜品编号">
-                        </div>
+
                         <div class="sub-title">是否默认分类</div>
                         <div>
                             <div class="radio3 radio-check radio-success radio-inline">
