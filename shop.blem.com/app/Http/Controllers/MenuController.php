@@ -21,6 +21,7 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
+
         $data = ['id'=>$request->id];
         //原始查询
         $rows = Menu::where('shop_id',Auth::user()->id)
@@ -35,6 +36,8 @@ class MenuController extends Controller
         }
         //如果有最小
         if($min = $request->min){
+            $this->validate($request,['min' => 'numeric',],['min.numeric' => '最低价格搜索请输入数字',]);//验证数据格式
+
             $rows = $rows
                 ->where('goods_price','>=',$min);
 
@@ -42,6 +45,8 @@ class MenuController extends Controller
         }
         //如果有最大
         if($max = $request->max){
+            $this->validate($request,['max' => 'numeric',],['max.numeric' => '最高价格搜索请输入数字',]);//验证数据格式
+
             $rows = $rows
                 ->where('goods_price','<=',$max);
 
