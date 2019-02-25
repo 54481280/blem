@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopCategoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +19,10 @@ class ShopCategoriesController extends Controller
      */
     public function index(Request $request)
     {
-        $rows = ShopCategories::paginate(2);//获取分页数据
+        $rows = ShopCategories::paginate(5);//获取分页数据
 
         if($keyword = $request->keyword){
-            $rows = ShopCategories::where('name','like',"%{$keyword}%")->paginate(1);//获取查询分页数据
+            $rows = ShopCategories::where('name','like',"%{$keyword}%")->paginate(5);//获取查询分页数据
         }
 
         return view('Cate.index',compact('rows','keyword'));//返回页面及数据
@@ -47,23 +51,18 @@ class ShopCategoriesController extends Controller
         $this->validate($request,
             [
                 'name' => 'required',
-                'img' => 'required|image|max:2048',
+                'img' => 'required',
             ],
             [
                 'name.required' => '商家分类名称不能为空',
                 'img.required' => '请上传商家分类图片',
-                'img.image' => '请上传正确格式的图片',
-                'img.max' => '请上传的图片大小不超过2M',
             ]);
-
-        //验证通过，上传图片到服务器，并获取上传后的图片路径
-        $path = $request->file('img')->store('public/CateImages');
 
         //验证通过，上传数据至数据库
         ShopCategories::create(
             [
                 'name' => $request->name,
-                'img' => $path,
+                'img' => $request->img,
                 'status' => 0,//默认为0，隐藏商家分类
             ]
         );
@@ -109,19 +108,15 @@ class ShopCategoriesController extends Controller
         $this->validate($request,
             [
                 'name' => 'required',
-                'img' => 'image|max:2048',
             ],
             [
                 'name.required' => '商家分类名称不能为空!',
-                'img.image' => '请上传正确格式的图片!',
-                'img.max' => '请上传的图片大小不超过2M!',
             ]);
 
         //验证通过，上传图片到服务器，并获取上传后的图片路径
         $path = $shop->img;//获取原始图片路径
-        if($img = $request->file('img')){
-            Storage::delete($shop->img);//删除原始图片
-            $path = $img->store('public/CateImages');
+        if($request->img){
+            $path = $request->img;
         }
 
         //验证通过，上传数据至数据库
@@ -163,5 +158,10 @@ class ShopCategoriesController extends Controller
 
         //操作完成，跳转页面并给出提示
         return redirect()->route('shop.index')->with('success',$str);
+    }
+
+    //接收上传文件
+    public function autoFile(Request $request){
+        return ["path"=>Storage::url($request->file('file')->store('public/AdminImages'))];
     }
 }

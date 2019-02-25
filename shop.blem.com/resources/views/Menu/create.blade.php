@@ -1,6 +1,5 @@
 @extends('layout.app')
 @section('content')
-
     <div class="row" id="upPwdForm">
         <div class="col-xs-12">
             <div class="card">
@@ -25,13 +24,18 @@
                             <input type="text" class="form-control" name="goods_name" value="{{old('goods_name')}}" placeholder="请输入菜品名称">
                         </div>
                         <div class="sub-title">菜品图片</div>
+
                         <div class="row">
                             <div class="col-md-4">
-                            <input type="file" id="exampleInputFile" name="goods_img" onchange="PreviewImage(this)" id="info_photo">
+                                <div id="uploader-demo">
+                                    <!--用来存放item-->
+                                    <div id="fileList" class="uploader-list"></div>
+                                    <div id="filePicker">选择图片</div>
+                                    <input type="hidden" name="goods_img" id="img_path"/>
+                                </div>
                             </div>
                             <div class="col-md-8">
-                                <img src="/images/00.jpg" width="100" height="100" id="default">
-                                <div id="photo_info" class="photo_info"></div>
+                                <img src="/images/00.jpg" id="autoImg" width="100" height="100" id="default">
                             </div>
                         </div>
 
@@ -86,5 +90,7 @@
     </div>
     @include('layout._showImg')
 @stop
+
+
 
 

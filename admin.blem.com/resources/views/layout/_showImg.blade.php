@@ -1,35 +1,36 @@
 <script>
-//图片预览
-function PreviewImage(imgFile) {
+    // 初始化Web Uploader
+    var uploader = WebUploader.create({
 
-var filextension = imgFile.value.substring(imgFile.value.lastIndexOf("."), imgFile.value.length);filextension = filextension.toLowerCase();
-if ((filextension != '.jpg') && (filextension != '.gif')&& (filextension != '.jpeg') && (filextension != '.png')&& (filextension != '.bmp')) {
-alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 !");
-imgFile.focus();
-} else {
-var path;
-if (document.all)//IE
-{
-imgFile.select();
-path = document.selection.createRange().text;
-document.getElementById("photo_info").innerHTML = "";
-document.getElementById("photo_info").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',sizingMethod='scale',src=\""
-+ path + "\")";//使用滤镜效果
-} else//FF
-{
-path = window.URL.createObjectURL(imgFile.files[0]);// FF 7.0以上
-//path = imgFile.files[0].getAsDataURL();// FF 3.0
-var obj = document.getElementById('default');
-obj.style.display = 'none';
-document.getElementById("photo_info").innerHTML = "<img id='img1' width='100px' height='100px' src='"+path+"'/>";
-//document.getElementById("img1").src = path;
-}
-}
-function $(obj){
-return document.getElementById(obj);
-}
-function show(objid) {
-$(objid).style.display='inline';
-}
-}
+        // 选完文件后，是否自动上传。
+        auto: true,
+
+        // swf文件路径
+        // swf: BASE_URL + '/js/Uploader.swf',
+
+        // 文件接收服务端。
+        server: '/autoFile',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        },
+
+        //设置上传请求参数
+        formData:{
+            _token:'{{csrf_token()}}'
+        }
+    });
+    //监听上传成功事件
+    uploader.on('uploadSuccess',function(file,response){
+        console.log(response);
+        $('#autoImg').attr('src',response.path);
+        $('#img_path').val(response.path);
+    })
 </script>

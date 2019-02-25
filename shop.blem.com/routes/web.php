@@ -28,4 +28,8 @@ Route::resource('menus','MenuCategoriesController');
 //定义菜品资源路由
 Route::resource('menu','MenuController');
 Route::get('menu/{menu}/status','MenuController@status')->name('status');
-//Route::get('menu/{id}/index','MenuController@index')->name('menu.index');
+Route::post('/autoFile','MenuController@autoFile');//定义上传文件路由
+
+//定义活动路由
+Route::get('active','ActiveController@index')->name('active.index');
+Route::get('wait','ActiveController@wait')->name('active.wait');

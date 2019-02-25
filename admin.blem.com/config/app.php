@@ -177,6 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
+        //oss
+        Jacobcyl\AliOSS\AliOssServiceProvider::class,
 
     ],
 

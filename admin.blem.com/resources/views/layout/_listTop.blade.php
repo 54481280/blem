@@ -12,7 +12,7 @@
                     <input type="text" class="form-control" name="keyword" style="width: 400px;" id="exampleInputAmount" placeholder="@yield('Search')">
                 </div>
             </div>
-            {{csrf_field()}}
+            @yield('searchDiv')
             <button type="submit" class="btn btn-primary">@yield('Search')</button>
         </form>
     </div>

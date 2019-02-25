@@ -27,7 +27,7 @@
             <td style="line-height: 60px"><input type="checkbox" name="id" class="id" value="{{$row->id}}"> {{$row->id}}</td>
             <td style="line-height: 60px">{{$row->cate->name}}</td>
             <td style="line-height: 60px">{{$row->shop_name}}</td>
-            <td style="line-height: 60px"><img src="{{$row->img()}}" width="60" height="60"/> </td>
+            <td style="line-height: 60px"><img src="{{$row->shop_img}}" width="60" height="60"/> </td>
             <td style="line-height: 60px">{{$row->brand ? '品牌' : '非品牌'}}</td>
             <td style="line-height: 60px">{{$row->shop_rating}}</td>
             <td style="line-height: 60px">{{$row->created_at}}</td>
@@ -48,7 +48,7 @@
 
                 <button class="btn btn-success" title="查看详情" onclick="location.href='{{route('shops.show',[$row])}}'"><span class="glyphicon glyphicon-eye-open"></span></button>
                 <button class="btn btn-warning" title="编辑" onclick="location.href='{{route('shops.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
-                <form action="{{route('shop.destroy',[$row])}}" method="post" style="display: inline">
+                <form action="{{route('shops.destroy',[$row])}}" method="post" style="display: inline">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button class="btn btn-danger" title="删除"><span class="glyphicon glyphicon-trash"></span></button>

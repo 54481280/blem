@@ -19,6 +19,11 @@
     <!-- CSS App -->
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/themes/flat-blue.css">
+    <!--引入CSS-->
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+    <!--引入JS-->
+    <script type="text/javascript" src="/lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
 </head>
 
 <body class="flat-blue">

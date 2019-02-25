@@ -51,13 +51,14 @@
                 </li>
                 <li class="panel panel-default dropdown">
                     <a data-toggle="collapse" href="#dropdown-form">
-                        <span class="icon fa fa-file-text-o"></span><span class="title">Form</span>
+                        <span class="icon fa fa-file-text-o"></span><span class="title">平台活动</span>
                     </a>
                     <!-- Dropdown level 1 -->
                     <div id="dropdown-form" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
-                                <li><a href="form/ui-kits.html">Form UI Kits</a>
+                                <li><a href="{{route('active.index')}}">正在进行的活动</a>
+                                <li><a href="{{route('active.wait')}}">即将上线的活动</a>
                                 </li>
                             </ul>
                         </div>
@@ -134,3 +135,4 @@
                 <div class="card">
 @include('layout._error'){{--提示--}}
 @include('layout._tips')
+

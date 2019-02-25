@@ -65,7 +65,7 @@
                 <form action="{{route('login')}}" method="post" enctype="multipart/form-data">
                     <div class="input-group adm">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span> </div>
-                        <input type="text" class="form-control" name="name" style="width: 300px;" id="exampleInputAmount" placeholder="请输入管理员账号">
+                        <input type="text" class="form-control" name="name" style="width: 300px;" value="{{old('name')}}" id="exampleInputAmount" placeholder="请输入管理员账号">
                     </div>
                     <div class="input-group adm">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span> </div>

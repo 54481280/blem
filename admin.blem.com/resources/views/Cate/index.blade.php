@@ -26,7 +26,7 @@
         <tr class="active">
             <td style="line-height: 60px"><input type="checkbox" name="id" class="id" value="{{$row->id}}"> {{$row->id}}</td>
             <td style="line-height: 60px">{{$row->name}}</td>
-            <td style="line-height: 60px"><img src="{{$row->img()}}" width="60" height="60"/> </td>
+            <td style="line-height: 60px"><img src="{{$row->img}}" width="60" height="60"/> </td>
             <td style="line-height: 60px">{{$row->updated_at}}</td>
             <td style="line-height: 60px">{{$row->created_at}}</td>
             <td style="line-height: 60px">

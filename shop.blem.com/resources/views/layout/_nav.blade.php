@@ -63,7 +63,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{auth()->user()->name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu animated fadeInDown">
                     <li class="profile-img">
-                        <img src="/img/profile/picjumbo.com_HNCK4153_resize.jpg" class="profile-img">
+                        <img src="{{auth()->user()->shops->shop_img}}" class="profile-img">
                     </li>
                     <li>
                         <div class="profile-info">

@@ -13,16 +13,19 @@
         </div>
         <div class="form-group row col-md-4">
             <label for="info_photo">选择商家分类图片</label>
-            <input type="file" name="img" onchange="PreviewImage(this)" id="info_photo">
-            <p class="help-block">请选择合适的图片作为分类图片.</p>
+            <div id="uploader-demo">
+                <!--用来存放item-->
+                <div id="fileList" class="uploader-list"></div>
+                <div id="filePicker">选择图片</div>
+                <input type="hidden" name="img" id="img_path"/>
+            </div>
         </div>
         <div class="col-md-8">
-            <img src="{{$shop->img()}}" width="100" height="100" id="default">
-            <div id="photo_info" class="photo_info"></div>
+            <img src="{{$shop->img}}" id="autoImg" width="100" height="100" id="default">
         </div>
         {{csrf_field()}}
         {{method_field('patch')}}
         <button type="submit" class="btn btn-success col-md-1">确定编辑</button>
     </form>
-@stop
 @include('layout._showImg')
+@stop

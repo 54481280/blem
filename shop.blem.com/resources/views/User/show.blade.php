@@ -11,7 +11,7 @@
             <h1>商家店铺名称： <small>{{auth()->user()->shops->shop_name}}</small></h1>
         </div>
 
-        <h3 class="col-md-12">商家LOGO： <small><img src="/images/00.jpg" width="80" height="80"/></small></h3>
+        <h3 class="col-md-12">商家LOGO： <small><img src="{{auth()->user()->shops->shop_img}}" width="80" height="80"/></small></h3>
         <h3 class="col-md-6">店铺类别： <small>{{auth()->user()->shops->cate->name}}</small></h3>
         <h3 class="col-md-6">店铺评分： <small>{{auth()->user()->shops->shop_rating}} 分</small></h3>
         <h3 class="col-md-12" style="border-bottom: 2px solid #eee"></h3>

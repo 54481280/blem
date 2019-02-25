@@ -70,7 +70,7 @@ class MenuCategoriesController extends Controller
            'name' => $request->name,
            'type_accumulation' => $this->strShuffle(),
             'description' => $request->description,
-            'shop_id' => Auth::user()->id,
+            'shop_id' => Auth::user()->shop_id,
             'is_selected' => $request->is_selected,
         ]);
 
@@ -158,7 +158,10 @@ class MenuCategoriesController extends Controller
 
     //只能有一个默认分类(将所有分类的默认修改为否)
     protected function cate(){
-       DB::update('update menu_categories set is_selected = 0 where shop_id = ?',[Auth::user()->id]);
+        MenuCategories::where('is_selected','1')
+            ->where('shop_id',Auth::user()->shop_id)
+            ->update(['is_selected' => 0]);
+//       DB::update('update menu_categories set is_selected = 0 where is_selected = 1 and shop_id = ?',[Auth::user()->id]);
     }
 
     //更好随机5位字符

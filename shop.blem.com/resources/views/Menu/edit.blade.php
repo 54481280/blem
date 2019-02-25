@@ -27,11 +27,15 @@
                         <div class="sub-title">菜品图片</div>
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="file" id="exampleInputFile" name="goods_img" onchange="PreviewImage(this)" id="info_photo">
+                                <div id="uploader-demo">
+                                    <!--用来存放item-->
+                                    <div id="fileList" class="uploader-list"></div>
+                                    <div id="filePicker">选择图片</div>
+                                    <input type="hidden" name="goods_img" id="img_path"/>
+                                </div>
                             </div>
                             <div class="col-md-8">
-                                <img src="{{$menu->goods_img}}" width="100" height="100" id="default">
-                                <div id="photo_info" class="photo_info"></div>
+                                <img src="{{$menu->goods_img}}" id="autoImg" width="100" height="100" id="default">
                             </div>
                         </div>
 

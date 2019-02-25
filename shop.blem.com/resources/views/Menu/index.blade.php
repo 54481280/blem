@@ -24,7 +24,6 @@
                                 <input type="text" class="form-control" name="max" id="" placeholder="请输入价格（最高价格）">
                                 <input type="text" class="form-control" style="margin-left: 20px" name="keyword" id="exampleInputEmail2" placeholder="请输入菜品名称">
                             </div>
-                            {{csrf_field()}}
                             <button type="submit" class="btn btn-primary"><span class="icon fa fa-search"></span></button>
                         </form>
                     </div>

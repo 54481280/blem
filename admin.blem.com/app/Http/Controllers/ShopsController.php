@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ShopCategories;
 use App\Models\Shops;
+use App\Models\User;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +59,7 @@ class ShopsController extends Controller
             [
                 //商家信息数据验证
                 'shop_name' => 'required',//商家名称
-                'shop_img' => 'required|image|max:2048',//商家图片
+                'shop_img' => 'required',//商家图片
                 'start_send' => 'required',//起送金额不能为空
                 'send_cost' => 'required',//配送费不能为空
                 'notice' => 'required',//店铺公告不能为空
@@ -71,8 +76,6 @@ class ShopsController extends Controller
                 //商家信息数据验证
                 'shop_name.required' => '商家名称不能为空',
                 'shop_img.required' => '请上传商家分类图片',
-                'shop_img.image' => '请上传正确格式的图片',
-                'shop_img.max' => '请上传的图片大小不超过2M',
                 'start_send.required' => '起送金额不能为空',
                 'send_cost.required' => '配送费不能为空',
                 'notice.required' => '店铺公告不能为空',
@@ -86,9 +89,6 @@ class ShopsController extends Controller
                 'password2.required' => '商家重复密码不能为空',
                 'password2.same' => '两次密码不一致，请重新输入',
             ]);
-
-        //验证通过，上传图片到服务器，并获取上传后的图片路径
-        $path = $request->file('shop_img')->store('public/ShopImages');
 
         //验证通过，上传商家信息数据至数据库
         DB::beginTransaction();//开启事务
@@ -109,7 +109,7 @@ class ShopsController extends Controller
                     'send_cost' => $request->send_cost,
                     'notice' => $request->notice,
                     'discount' => $request->discount,
-                    'shop_img' => $path,
+                    'shop_img' => $request->shop_img,
                     'status' => 1,//默认为1，管理员添加商户，默认正常
                 ]
             );
@@ -172,7 +172,6 @@ class ShopsController extends Controller
             [
                 //商家信息数据验证
                 'shop_name' => 'required',//商家名称
-                'shop_img' => 'image|max:2048',//商家图片
                 'start_send' => 'required',//起送金额不能为空
                 'send_cost' => 'required',//配送费不能为空
                 'notice' => 'required',//店铺公告不能为空
@@ -182,8 +181,6 @@ class ShopsController extends Controller
             [
                 //商家信息数据验证
                 'shop_name.required' => '商家名称不能为空',
-                'shop_img.image' => '请上传正确格式的图片',
-                'shop_img.max' => '请上传的图片大小不超过2M',
                 'start_send.required' => '起送金额不能为空',
                 'send_cost.required' => '配送费不能为空',
                 'notice.required' => '店铺公告不能为空',
@@ -193,9 +190,8 @@ class ShopsController extends Controller
 
         //验证通过，上传图片到服务器，并获取上传后的图片路径
         $path = $shop->shop_img;//获取原始图片路径
-        if($img = $request->file('shop_img')){
-            Storage::delete($shop->shop_img);//删除原始图片
-            $path = $img->store('public/ShopImages');
+        if($request->shop_img){
+            $path = $request->shop_img;
         }
 
         //向shops表更新商家信息
@@ -231,12 +227,14 @@ class ShopsController extends Controller
      */
     public function destroy(Shops $shop)
     {
-        //删除商家分类数据
-        Storage::delete($shop->shop_img);//删除图片
-        $shop->delete();//删除商家分类数据
+        $result = DB::transaction(function ( ) use($shop) {
+            Users::destroy('shop_id',$shop->id);
+
+            $shop->delete();//删除商家分类数据
+        });
 
         //删除功能完成，跳转页面并给出提示信息
-        return redirect()->route('shop.index')->with('success','删除商家分类成功！');
+        return back()->with('success','删除商家分类成功！');
     }
 
     //商家状态功能
