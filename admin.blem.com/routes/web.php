@@ -37,3 +37,5 @@ Route::get('logout','LoginController@logout')->name('logout');//退出登录功�
 //定义活动资源路由
 Route::resource('active','ActiveController');
 
+
+

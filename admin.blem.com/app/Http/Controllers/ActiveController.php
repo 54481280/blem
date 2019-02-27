@@ -128,9 +128,8 @@ class ActiveController extends Controller
      */
     public function edit(Active $active)
     {
-        $minDate = date('Y-m-d');//最小时间
-        $maxDate = date('Y-m-d',strtotime('+1 day'));//最小时间
-
+        $minDate = date('Y-m-d').'T'.date('H:i:s');//最小时间
+        $maxDate = date('Y-m-d',strtotime('+1 day')).'T'.date('H:i:s');//最大时间
         //更新活动表单
         return view('active.edit',compact('active','minDate','maxDate'));
     }
@@ -144,6 +143,7 @@ class ActiveController extends Controller
      */
     public function update(Request $request, Active $active)
     {
+        //dd($request->input());
         //完成更新操作
         $this->validate($request,
             [

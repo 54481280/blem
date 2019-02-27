@@ -13,11 +13,11 @@
         </div>
         <div class="form-group row col-md-12">
             <label for="start">活动开始时间</label>
-            <input type="date" class="form-control" value="{{$active->start_time}}" min="{{$minDate}}" id="start" name="start_time" >
+            <input type="datetime-local" class="form-control" value="{{str_replace(' ','T',$active->start_time)}}" min="{{$minDate}}" id="start" name="start_time" >
         </div>
         <div class="form-group row col-md-12">
             <label for="end_time">活动结束时间</label>
-            <input type="date" class="form-control" min="{{$maxDate}}" id="end_time" name="end_time" value="{{$active->end_time}}">
+            <input type="datetime-local" class="form-control" min="{{$maxDate}}" id="end_time" name="end_time" value="{{str_replace(' ','T',$active->end_time)}}">
         </div>
         <div class="form-group row col-md-12">
             <label for="content">活动详情</label>

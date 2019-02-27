@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShopCategories;
+use App\Models\Shops;
+use http\Exception\BadConversionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -139,8 +141,10 @@ class ShopCategoriesController extends Controller
      */
     public function destroy(ShopCategories $shop)
     {
-        //删除商家分类数据
-        Storage::delete($shop->img);//删除图片
+        if( Shops::where('shop_category_id',$shop->id)->first() ){
+            return back()->with('danger','该分类下有商家，删除失败！');
+        }
+
         $shop->delete();//删除商家分类数据
 
         //删除功能完成，跳转页面并给出提示信息

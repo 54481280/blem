@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+/*
+ * 定义接口路由
+ */
+
+Route::get('/api/businessList/','ApiController@businessList');//获得商家列表接口
+Route::get('/api/business/','ApiController@business');//获得指定商家接口
