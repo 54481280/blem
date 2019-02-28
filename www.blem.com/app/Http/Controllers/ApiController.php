@@ -214,7 +214,6 @@ class ApiController extends Controller
             //获取验证码失败
             return ['status'=>'false','message' => '获取验证码失败'];
         }
-
         //获取验证码成功
         return ['status'=>'true','message' => '获取验证码成功'];
     }

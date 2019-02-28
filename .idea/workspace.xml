@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e95de7e6-c93d-48bc-bd05-bb359f6b2f59" name="Default Changelist" comment="" />
+    <list default="true" id="e95de7e6-c93d-48bc-bd05-bb359f6b2f59" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/www.blem.com/app/Http/Controllers/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/www.blem.com/app/Http/Controllers/ApiController.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +61,7 @@
           <entry key="dummy" value="21" />
           <entry key="env" value="59" />
           <entry key="js" value="22" />
-          <entry key="php" value="30271" />
+          <entry key="php" value="30274" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -67,7 +69,7 @@
           <entry key="Blade" value="11820" />
           <entry key="CSS" value="202" />
           <entry key="JavaScript" value="22" />
-          <entry key="PHP" value="18451" />
+          <entry key="PHP" value="18454" />
           <entry key="PLAIN_TEXT" value="80" />
         </counts>
       </usages-collector>
@@ -105,8 +107,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www.blem.com/app/Http/Controllers/ApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
+            <state relative-caret-position="464">
+              <caret line="215" column="9" selection-start-line="215" selection-start-column="9" selection-end-line="215" selection-end-column="9" />
               <folding>
                 <element signature="e#40#62#0#PHP" expanded="true" />
                 <element signature="e#189#280#0#PHP" />
@@ -283,7 +285,7 @@
       <path value="$PROJECT_DIR$/www.blem.com/vendor/predis/predis" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="218" />
     <option name="y" value="193" />
     <option name="width" value="1194" />
@@ -340,16 +342,16 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\www.blem.com\app\Http\Controllers" />
+      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\database\migrations" />
+      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\shop.blem.com\resources\views" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\www.blem.com\app" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\app\Models" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\shop.blem.com\resources\views\Active" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\resources\views" />
-      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\shop.blem.com\resources\views" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\www.blem.com\app\Http\Controllers" />
-      <recent name="E:\phpStudy\PHPTutorial\WWW\blem\admin.blem.com\database\migrations" />
       <recent name="E:\phpStudy\PHPTutorial\WWW\blem\shop.blem.com\resources\views" />
     </key>
   </component>
@@ -384,12 +386,12 @@
       <workItem from="1551101532415" duration="8509000" />
       <workItem from="1551142924118" duration="21255000" />
       <workItem from="1551229388527" duration="12243000" />
-      <workItem from="1551315861346" duration="24541000" />
+      <workItem from="1551315861346" duration="24632000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="209200000" />
+    <option name="totallyTimeSpent" value="209291000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -401,7 +403,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -733,8 +735,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www.blem.com/app/Http/Controllers/ApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
+        <state relative-caret-position="464">
+          <caret line="215" column="9" selection-start-line="215" selection-start-column="9" selection-end-line="215" selection-end-column="9" />
           <folding>
             <element signature="e#40#62#0#PHP" expanded="true" />
             <element signature="e#189#280#0#PHP" />
