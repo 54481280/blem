@@ -29,6 +29,8 @@ Route::resource('menus','MenuCategoriesController');
 Route::resource('menu','MenuController');
 Route::get('menu/{menu}/status','MenuController@status')->name('status');
 Route::post('/autoFile','MenuController@autoFile');//定义上传文件路由
+//Route::get('/menu/moreDelete','MenuController@moreDelete');//定义批量删除路由
+Route::get('moreDel','MenuController@moreDel')->name('menu.moreDel');
 
 //定义活动路由
 Route::get('active','ActiveController@index')->name('active.index');

@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="card-body" style="margin-bottom: 50px">
-                    <div class="col-md-offset-1 col-md-4">
+                    <div class="col-md-offset-1 col-md-4 col-xs-12">
                         <button class="btn btn-success" onclick="location.href='{{route('menus.create')}}'"><span class="icon fa fa-plus"></span> 新增菜品分类</button>
                     </div>
                     <div class="col-md-3">

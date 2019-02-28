@@ -14,6 +14,7 @@
                 <div class="card-body" style="margin-bottom: 50px">
                     <div class="col-md-offset-1 col-md-2">
                         <button class="btn btn-success" onclick="location.href='{{route('menu.create')}}'"><span class="icon fa fa-plus"></span> 新增菜品</button>
+                        <button class="btn btn-danger" onclick="moreDelete()"><span class="icon fa fa-institution"></span> 批量删除</button>
                     </div>
                     <div class="col-md-6">
                         <form action="{{route('menu.index')}}" method="get" class="form-inline">
@@ -45,6 +46,13 @@
                 <div class="card-body" style="margin-bottom: 50px">
                 <table class="table table-bordered">
                    <tr>
+                       <th>
+                           <div class="checkbox3 checkbox-inline checkbox-check checkbox-light">
+                               <input type="checkbox" id="moreDelete">
+                               <label for="moreDelete">
+                               </label>
+                           </div>
+                       </th>
                        <th>菜品名称</th>
                        <th>菜品图片</th>
                        <th>菜品分类</th>
@@ -57,6 +65,13 @@
                    </tr>
                     @foreach($rows as $row)
                         <tr>
+                            <td>
+                                <div class="checkbox3 checkbox-inline checkbox-check checkbox-light">
+                                    <input type="checkbox" id="checkbox-fa-light-{{$row->id}}" class="delId" value="{{$row->id}}">
+                                    <label for="checkbox-fa-light-{{$row->id}}">
+                                    </label>
+                                </div>
+                            </td>
                             <td>{{$row->goods_name}}</td>
                             <td><img src="{{$row->goods_img}}" width="60" height="60"/> </td>
                             <td>{{$row->Catemenus->name}}</td>
@@ -95,5 +110,7 @@
             </div>
         </div>
     </div>
+
+@include('layout._moreDel');{{--批量删除--}}
 @stop
 

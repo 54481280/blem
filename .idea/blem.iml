@@ -40,10 +40,12 @@
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/phpunit/phpunit-mock-objects" />
+      <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/predis/predis" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/psy/psysh" />
+      <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/qcloudsms/qcloudsms_php" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/ramsey/uuid" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/www.blem.com/vendor/sebastian/comparator" />

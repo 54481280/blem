@@ -1,10 +1,10 @@
 window.api = {
   // 登录验证接口
-  loginCheck: '/loginCheck.php',
+  loginCheck: 'http://www.blem.com/api/login',
   // 获取短信验证码接口
-  sms: '/sms.php',
+  sms: 'http://www.blem.com/api/sms',
   // 注册接口
-  regist: '/regist.php',
+  regist: 'http://www.blem.com/api/regist',
   // 修改密码接口
   changePassword: '/changePassword.php',
   // 忘记密码接口

@@ -232,4 +232,12 @@ class MenuController extends Controller
     public function autoFile(Request $request){
         return ["path"=>Storage::url($request->file('file')->store('public/ShopImages'))];
     }
+
+    //批量删除
+    public function moreDel(Request $request){
+
+        $ids = explode(',',$request->ids);
+        Menu::whereIn('id',$ids)->delete();
+        return back()->with('success','批量删除成功！');
+    }
 }
