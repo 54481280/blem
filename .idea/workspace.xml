@@ -301,7 +301,7 @@
       <path value="$PROJECT_DIR$/www.blem.com/vendor/predis/predis" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="727" />
     <option name="y" value="21" />
     <option name="width" value="1194" />
