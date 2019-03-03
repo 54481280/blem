@@ -7,9 +7,12 @@ use App\Models\Carts;
 use App\Models\Member;
 use App\Models\Menu;
 use App\Models\MenuCategories;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Shops;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
@@ -137,17 +140,13 @@ class ApiController extends Controller
 
         //获取对应菜品分类下的菜品
         foreach($shop['commodity'] as $row){
-            $row['goods_list'] = Menu::select('id','goods_name','rating','goods_price','description','month_sales','rating_count',
+            $row['goods_list'] = Menu::select('id as goods_id','goods_name','rating','goods_price','description','month_sales','rating_count',
                 'tips','satisfy_count','satisfy_rate','goods_img')
                 ->where('category_id',$row->id)
                 ->where('status',1)
-                ->get();//只能获取状态正常的菜品
+                ->get()
+                ->toArray();//只能获取状态正常的菜品
 
-            //将商品的id键值替换为goods_id
-            foreach ($row['goods_list'] as $good){
-                unset($good['id']);
-                $good['goods_id'] = $good->id;
-            }
         }
 
 
@@ -181,8 +180,6 @@ class ApiController extends Controller
                 'message' => implode(' ',$validator->errors()->all()),
             ];
         }
-
-//        exit;
 
         //验证用户名存不存在
         if(empty(Member::where('username',$request->username)->get())){
@@ -410,11 +407,13 @@ class ApiController extends Controller
            //判断购物车里有没有一样的商品，如果有就修改数量，如果没有就添加
            if(!empty(
                $row = Carts::where('goods_id',$request->goodsList[$i])
-                    ->where('user_id',Auth::user()
-                    ->id)->first())
+                    ->where('user_id',Auth::user()->id)
+                    ->first()
+                )
            ){
                //修改商品数量
                 Carts::where('goods_id',$request->goodsList[$i])
+                    ->where('user_id',Auth::user()->id)
                     ->update([
                         'amount' => $row->amount + $request->goodsCount[$i]
                     ]);
@@ -426,7 +425,6 @@ class ApiController extends Controller
                    'goods_id' => $request->goodsList[$i],
                    'amount' => $request->goodsCount[$i],
                ]);
-
            }
         }
 
@@ -446,15 +444,11 @@ class ApiController extends Controller
         //遍历购物车数据用商品ID来读取商品表中的商品数据
         foreach($carts as $cart){
             //购物车对应商品数据
-            $goodsList = Menu::select('id','goods_name','goods_img','goods_price')->where('id',$cart->goods_id)->first();
-            //获取对应返回值goods_id
-            $goodsList['goods_id'] = $goodsList->id;
+            $goodsList = Menu::select('id as goods_id','goods_name','goods_img','goods_price')->where('id',$cart->goods_id)->first();
             //获取对应的商品数量
             $goodsList['amount'] = $cart->amount;
             //计算对应商品记录的价格
             $goodsList['goods_price'] = $cart->amount * $goodsList->goods_price;
-            //删除多余元素id
-            unset($goodsList['id']);
             //计算商品总价格
             $data['totalCost'] += $goodsList->goods_price;
             //将商品最终信息列入goods_list 下
@@ -468,7 +462,210 @@ class ApiController extends Controller
 
     //生成订单接口
     public function addorder(Request $request){
-        return $request;
+        //生成订单随机编号
+        $sn = date('Ymd').uniqid();
+        //生成第三方交易号
+        $out_trade_no = uniqid();
+        //声明总价格
+        $moneys = 0;
+        //获取对应地址信息
+        $address = Address::select('province','city','area','detail_address','tel','name')->find($request->address_id);
+        //获取当前用户购物车信息
+        $cart = Carts::select('goods_id','amount')->where('user_id',Auth::user()->id)->get();
+        //开启事务,并接收获取到的ID
+        $orderId = DB::transaction(function () use ($cart,$moneys,$sn,$address,$out_trade_no){
+            //添加订单信息
+            $order = Order::create([
+                'user_id' => Auth::user()->id,
+                'sn' => $sn,
+                'province' =>$address->province,
+                'city' => $address->city,
+                'county' => $address->area,
+                'address' => $address->detail_address,
+                'tel' => $address->tel,
+                'name' => $address->name,
+                'status' => 0,//默认待支付
+                'out_trade_no' => $out_trade_no,
+                'shop_id' => 0,
+                'total' => 0,
+            ]);
+
+            //根据购物车中的商品获取商家id，商品总价格
+            foreach($cart as $menu){
+                $shop = Menu::select('shop_id','goods_price','goods_name','goods_img')->find($menu->goods_id);
+                $moneys += $shop->goods_price * $menu->amount;//计算总价格
+                $shop_id = $shop->shop_id;//商家id
+
+                //添加订单商品表
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'goods_id' => $menu->goods_id,
+                    'amount' => $menu->amount,
+                    'goods_name' => $shop->goods_name,
+                    'goods_img' => $shop->goods_img,
+                    'goods_price' => $shop->goods_price * $menu->amount,
+                ]);
+            }
+
+            //向订单表中再次添加订单总价格，及商家ID
+            $order->total = $moneys;
+            $order->shop_id = $shop_id;
+            $order->save();
+
+            //订单操作完成，清空该用户的购物车
+            Carts::where('user_id',Auth::user()->id)->delete();
+            //返回订单ID
+            return $order->id;
+        });
+
+        return ['status' => 'true','message' => '添加成功','order_id' => $orderId];
+    }
+
+    //获取指定订单数据接口
+    public function order(Request $request){
+        //获取订单信息
+        $order = Order::select('id','sn as order_code','created_at as order_birth_time','status as order_status','shop_id','total as order_price','province','city','county','address')
+            ->find($request->id)
+            ->toArray();
+        //获取详细地址
+        $order['order_address'] = $order['province'].$order['city'].$order['county'].$order['address'];
+        //删除多余的数据
+        unset($order['province'],$order['city'],$order['county'],$order['address']);
+        //替换订单状态
+        switch ($order['order_status']){
+            case -1:
+                $order['order_status'] = '已取消';
+                break;
+            case 0:
+                $order['order_status'] = '待支付';
+                break;
+            case 1:
+                $order['order_status'] = '待发货';
+                break;
+            case 2:
+                $order['order_status'] = '待确认';
+                break;
+            case 3:
+                $order['order_status'] = '完成';
+                break;
+        }
+        //查询商品详细信息
+        $order['goods_list'] = OrderDetail::select('goods_id','goods_name','goods_img','amount','goods_price')->where('order_id',$order['id'])->get()->toArray();
+        //查询商家信息
+        $shops = Shops::select('shop_name','shop_img')->find($order['shop_id'])->toArray();
+        //将订单信息与商家信息合并
+        $data = array_merge($order,$shops);
+        //返回数据
+        return $data;
+    }
+
+    //订单列表接口
+    public function orderList(){
+        $data = [];
+        //获取订单信息
+        $orders = Order::select('id','sn as order_code','created_at as order_birth_time','status as order_status','shop_id','total as order_price','province','city','county','address')
+            ->where('user_id',Auth::user()->id)
+            ->get()
+            ->toArray();
+        //获取订单商品信息
+        foreach ($orders as $order){
+            //获取详细地址
+            $order['order_address'] = $order['province'].$order['city'].$order['county'].$order['address'];
+            //删除多余的数据
+            unset($order['province'],$order['city'],$order['county'],$order['address']);
+            //替换订单状态
+            switch ($order['order_status']){
+                case -1:
+                    $order['order_status'] = '已取消';
+                    break;
+                case 0:
+                    $order['order_status'] = '待支付';
+                    break;
+                case 1:
+                    $order['order_status'] = '待发货';
+                    break;
+                case 2:
+                    $order['order_status'] = '待确认';
+                    break;
+                case 3:
+                    $order['order_status'] = '完成';
+                    break;
+            }
+            //查询商品详细信息
+            $order['goods_list'] = OrderDetail::select('goods_id','goods_name','goods_img','amount','goods_price')->where('order_id',$order['id'])->get()->toArray();
+            //查询商家信息
+            $shops = Shops::select('shop_name','shop_img')->find($order['shop_id'])->toArray();
+            //将订单信息与商家信息合并
+            $data[] = array_merge($order,$shops);
+
+        }
+        //返回数据
+        return $data;
+
+    }
+
+    //修改密码接口
+    public function changePassword(Request $request){
+        $validator = Validator::make($request->all(),
+            [
+                'newPassword' => 'required',
+                'oldPassword' => 'required',
+            ],
+            [
+                'newPassword.required' => '新密码不能为空',
+                'oldPassword.required' => '新密码不能为空',
+            ]);
+
+        if($validator->fails()){
+            return ['status','false','message' => implode(' ',$validator->errors()->all())];
+        }
+
+        //验证两次密码是否一致
+        if(Hash::check($request->oldPassword,Auth::user()->password)){
+            Auth::user()->password = Hash::make($request->newPassword);
+            Auth::user()->save();
+            return ['status'=>'true','message' => '修改成功'];
+        }else{
+            return ['status'=>'false','message' => '旧密码输入错误，修改失败'];
+        }
+
+
+    }
+
+    //重置密码接口
+    public function forgetPassword(Request $request){
+        //验证数据格式
+        $validator = Validator::make($request->all(),
+            [
+                'password' => 'required',//密码不能为空
+                'tel' => 'required|numeric|digits_between:11,11',//电话号码格式
+                'sms' => 'required|numeric|digits_between:4,4',//验证码格式
+            ],[
+                'password.required' => '密码不能为空',
+                'tel.required' => '电话号码不能为空',
+                'tel.numeric' => '电话号码只能为数字',
+                'tel.digits_between' => '电话号码格式不对',
+                'sms.required' => '验证码不能为空',
+                'sms.numeric' => '验证码只能为数字',
+                'sms.digits_between' => '验证码格式不对',
+            ]);
+
+        if($validator->fails()){
+            return [
+                'status' => 'false',
+                'message' => implode(' ',$validator->errors()->all()),
+            ];
+        }
+
+        //判断验证码是否正确
+        if($request->sms != Redis::get($request->tel)){
+            return ['status' => 'false','message' => '验证码错误，请从新获取'];
+        }
+
+        Member::where('tel',$request->tel)->update(['password'=>Hash::make($request->password)]);
+
+        return ['status' => 'true','message' => '重置密码成功'];
+
     }
 
 

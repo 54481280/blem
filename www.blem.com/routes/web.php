@@ -32,4 +32,13 @@ Route::get('/api/addressList/','ApiController@addressList');//地址列表接口
 Route::post('/api/editAddress/','ApiController@editAddress');//修改地址接口
 Route::post('/api/addCart/','ApiController@addCart');//保存购物车地址接口
 Route::get('/api/cart/','ApiController@cart');//保存购物车地址接口
+
+
 Route::post('/api/addorder/','ApiController@addorder');//添加订单接口
+Route::get('/api/order/','ApiController@order');//获取指定订单接口
+Route::get('/api/orderList/','ApiController@orderList');//获取指定订单接口
+
+Route::post('/api/changePassword/','ApiController@changePassword');//修改密码接口
+Route::post('/api/forgetPassword/','ApiController@forgetPassword');//重置密码接口
+
+

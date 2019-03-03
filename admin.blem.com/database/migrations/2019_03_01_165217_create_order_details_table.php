@@ -15,6 +15,12 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order_id');//订单id
+            $table->integer('goods_id');//商品id
+            $table->integer('amount');//商品数量
+            $table->string('goods_name');//商品名称
+            $table->string('goods_img');//商品图片
+            $table->decimal('goods_price',8,2);//商品价格
             $table->timestamps();
         });
     }
