@@ -35,3 +35,8 @@ Route::get('moreDel','MenuController@moreDel')->name('menu.moreDel');
 //定义活动路由
 Route::get('active','ActiveController@index')->name('active.index');
 Route::get('wait','ActiveController@wait')->name('active.wait');
+
+//定义订单路由
+Route::get('Order','OrderController@index')->name('order.index');
+Route::get('Order/status','OrderController@status');
+

@@ -51,7 +51,7 @@
                 </li>
                 <li class="panel panel-default dropdown">
                     <a data-toggle="collapse" href="#dropdown-form">
-                        <span class="icon fa fa-file-text-o"></span><span class="title">平台活动</span>
+                        <span class="icon fa fa-cubes"></span><span class="title">平台活动</span>
                     </a>
                     <!-- Dropdown level 1 -->
                     <div id="dropdown-form" class="panel-collapse collapse">
@@ -68,15 +68,13 @@
                 <!-- Dropdown-->
                 <li class="panel panel-default dropdown">
                     <a data-toggle="collapse" href="#component-example">
-                        <span class="icon fa fa-cubes"></span><span class="title">Components</span>
+                        <span class="icon fa fa-file-text-o"></span><span class="title">订单管理</span>
                     </a>
                     <!-- Dropdown level 1 -->
                     <div id="component-example" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
-                                <li><a href="components/pricing-table.html">Pricing Table</a>
-                                </li>
-                                <li><a href="components/chartjs.html">Chart.JS</a>
+                                <li><a href="{{route('order.index')}}">订单列表</a>
                                 </li>
                             </ul>
                         </div>

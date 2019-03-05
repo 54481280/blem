@@ -2,11 +2,13 @@
     <div class="row col-md-12 as-top"><span class="glyphicon glyphicon-tower"></span>    后台系统</div>
     <div class="row col-md-12 as-nav" style="padding:0px;margin: 0px;">
         <ul>
+            <li><span class="glyphicon glyphicon-globe"></span><a href="{{route('admin.index')}}">系统数据</a></li>
             <li><span class="glyphicon glyphicon-education"></span><a href="{{route('admin.index')}}">管理员管理</a></li>
             <li><span class="glyphicon glyphicon-align-justify"></span><a href="{{route('shop.index')}}">商家分类管理</a></li>
             <li><span class="glyphicon glyphicon-tags"></span><a href="{{route('shops.index')}}">商家信息管理</a></li>
             <li><span class="glyphicon glyphicon-user"></span><a href="{{route('user.index')}}">商家账户管理</a></li>
             <li><span class="glyphicon glyphicon-th-large"></span><a href="{{route('active.index')}}">商家活动管理</a></li>
+            <li><span class="glyphicon glyphicon-star"></span><a href="{{route('member.index')}}">会员管理</a></li>
             <li><span class="glyphicon glyphicon-option-horizontal"></span><a href="#">其他管理</a></li>
         </ul>
     </div>

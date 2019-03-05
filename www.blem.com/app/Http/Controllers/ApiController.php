@@ -462,6 +462,11 @@ class ApiController extends Controller
 
     //生成订单接口
     public function addorder(Request $request){
+        //判断用户是否登录
+        if(empty(Auth::user())){
+            return ['status' => 'false','message' => '请登录过后再操作'];
+        }
+
         //生成订单随机编号
         $sn = date('Ymd').uniqid();
         //生成第三方交易号
@@ -473,56 +478,66 @@ class ApiController extends Controller
         //获取当前用户购物车信息
         $cart = Carts::select('goods_id','amount')->where('user_id',Auth::user()->id)->get();
         //开启事务,并接收获取到的ID
-        $orderId = DB::transaction(function () use ($cart,$moneys,$sn,$address,$out_trade_no){
-            //添加订单信息
-            $order = Order::create([
-                'user_id' => Auth::user()->id,
-                'sn' => $sn,
-                'province' =>$address->province,
-                'city' => $address->city,
-                'county' => $address->area,
-                'address' => $address->detail_address,
-                'tel' => $address->tel,
-                'name' => $address->name,
-                'status' => 0,//默认待支付
-                'out_trade_no' => $out_trade_no,
-                'shop_id' => 0,
-                'total' => 0,
-            ]);
-
-            //根据购物车中的商品获取商家id，商品总价格
-            foreach($cart as $menu){
-                $shop = Menu::select('shop_id','goods_price','goods_name','goods_img')->find($menu->goods_id);
-                $moneys += $shop->goods_price * $menu->amount;//计算总价格
-                $shop_id = $shop->shop_id;//商家id
-
-                //添加订单商品表
-                OrderDetail::create([
-                    'order_id' => $order->id,
-                    'goods_id' => $menu->goods_id,
-                    'amount' => $menu->amount,
-                    'goods_name' => $shop->goods_name,
-                    'goods_img' => $shop->goods_img,
-                    'goods_price' => $shop->goods_price * $menu->amount,
+        try{
+            $orderId = DB::transaction(function () use ($cart,$moneys,$sn,$address,$out_trade_no){
+                //添加订单信息
+                $order = Order::create([
+                    'user_id' => Auth::user()->id,
+                    'sn' => $sn,
+                    'province' =>$address->province,
+                    'city' => $address->city,
+                    'county' => $address->area,
+                    'address' => $address->detail_address,
+                    'tel' => $address->tel,
+                    'name' => $address->name,
+                    'status' => 0,//默认待支付
+                    'out_trade_no' => $out_trade_no,
+                    'shop_id' => 0,
+                    'total' => 0,
                 ]);
-            }
 
-            //向订单表中再次添加订单总价格，及商家ID
-            $order->total = $moneys;
-            $order->shop_id = $shop_id;
-            $order->save();
+                //根据购物车中的商品获取商家id，商品总价格
+                foreach($cart as $menu){
+                    $shop = Menu::select('shop_id','goods_price','goods_name','goods_img')->find($menu->goods_id);
+                    $moneys += $shop->goods_price * $menu->amount;//计算总价格
+                    $shop_id = $shop->shop_id;//商家id
 
-            //订单操作完成，清空该用户的购物车
-            Carts::where('user_id',Auth::user()->id)->delete();
-            //返回订单ID
-            return $order->id;
-        });
+                    //添加订单商品表
+                    OrderDetail::create([
+                        'order_id' => $order->id,
+                        'goods_id' => $menu->goods_id,
+                        'amount' => $menu->amount,
+                        'goods_name' => $shop->goods_name,
+                        'goods_img' => $shop->goods_img,
+                        'goods_price' => $shop->goods_price * $menu->amount,
+                    ]);
+                }
+
+                //向订单表中再次添加订单总价格，及商家ID
+                $order->total = $moneys;
+                $order->shop_id = $shop_id;
+                $order->save();
+
+                //订单操作完成，清空该用户的购物车
+                Carts::where('user_id',Auth::user()->id)->delete();
+                //返回订单ID
+                return $order->id;
+            });
+        }catch (\Exception $exception){
+            return ['status' => 'false','message' => '添加失败','order_id' => 0];
+        }
+
 
         return ['status' => 'true','message' => '添加成功','order_id' => $orderId];
     }
 
     //获取指定订单数据接口
     public function order(Request $request){
+        //判断用户是否登录
+        if(empty(Auth::user())){
+            return ['status' => 'false','message' => '请登录过后再操作'];
+        }
+
         //获取订单信息
         $order = Order::select('id','sn as order_code','created_at as order_birth_time','status as order_status','shop_id','total as order_price','province','city','county','address')
             ->find($request->id)
@@ -561,6 +576,11 @@ class ApiController extends Controller
 
     //订单列表接口
     public function orderList(){
+        //判断用户是否登录
+        if(empty(Auth::user())){
+            return ['status' => 'false','message' => '请登录过后再操作'];
+        }
+
         $data = [];
         //获取订单信息
         $orders = Order::select('id','sn as order_code','created_at as order_birth_time','status as order_status','shop_id','total as order_price','province','city','county','address')
@@ -606,6 +626,10 @@ class ApiController extends Controller
 
     //修改密码接口
     public function changePassword(Request $request){
+        //判断用户是否登录
+        if(empty(Auth::user())){
+            return ['status' => 'false','message' => '请登录过后再操作'];
+        }
         $validator = Validator::make($request->all(),
             [
                 'newPassword' => 'required',

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\ShopCategories;
 use App\Models\Shops;
 use App\Models\User;
@@ -10,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use function PHPSTORM_META\type;
 
 class UserController extends Controller
 {
@@ -24,8 +28,35 @@ class UserController extends Controller
      */
     public function index()
     {
+        //声明数组保存查询数据
+        $data = [];
+
+        //查询累计订单数量
+        $orderNum = Order::where('shop_id',Auth::user()->shop_id)->count();
+
+        //查询成功的订单数量
+        $successOrderNum = Order::where('shop_id',Auth::user()->shop_id)->where('status',3)->count();
+
+        //查询累计销售商品数量
+        $goodsNum = DB::select('select sum(a.amount) as num from orders as o join (select order_id,sum(amount) as amount from order_details GROUP BY order_id) as a on o.id = a.order_id where o.shop_id = ?',[Auth::user()->shop_id]);
+        $goodsNum = $goodsNum[0]->num;
+
+        //查询累计收益金额
+        $money = Order::where('shop_id',Auth::user()->shop_id)->where('status',3)->sum('total');
+
+        $data['orderNum'] = $orderNum;
+        $data['successOrderNum'] = $successOrderNum;
+        $data['goodsNum'] = $goodsNum;
+        $data['money'] = $money;
+
+        $data['week'] = $this->week();//获取最近一周的订单量
+        $data['month']  = $this->month();//获取最近三月的订单量
+        //最近一周菜品销量
+        $data['menuWeek'] = $this->menuWeek();
+        $data['menuMonth'] = $this->menuMonth();
+
         //商家个人中心
-        return view('User.index');
+        return view('User.index',compact('data'));
     }
 
     /**
@@ -188,15 +219,122 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success','修改个人密码成功！');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    //查询最近一周的订单量
+    public function week(){
+        //声明数组保存一周的数据
+        $week = [];
+        for($i=0;$i<=6;$i++){
+            $date = date('Y-m-d',strtotime("-$i day"));
+            $week[$date] = Order::where('created_at','like',"$date%")->where('shop_id',Auth::user()->shop_id)->count();
+        }
+        return $week;
     }
+
+    //最近三月订单量统计
+    public function month(){
+        //声明数组保存一周的数据
+        $month = [];
+        for($i=0;$i<=2;$i++){
+            $date = date('Y-m',strtotime("-$i month"));
+            $month[$date] = Order::where('created_at','like',"$date%")->where('shop_id',Auth::user()->shop_id)->count();
+        }
+        return $month;
+    }
+
+    //最近一周菜品销量统计
+    public function menuWeek(){
+        $menuWeek = [];//保存查询到的数据
+        $data = [];//用于保存返回的最终数据
+        for($i=0;$i<=6;$i++){
+            $date = date('Y-m-d',strtotime("-$i day"));
+            $menuWeek[$date] = DB::select('select goods_id,sum(amount) as num from order_details join menus on order_details.goods_id = menus.id where menus.shop_id = ? and order_details.created_at like ? GROUP BY goods_id ',[Auth::user()->shop_id,"$date%"]);
+            foreach ($menuWeek[$date] as $row){//
+                $row->goods_name = Menu::select('goods_name')->find($row->goods_id)->toArray()['goods_name'];
+                unset($row->goods_id);
+            }
+        }
+
+        $str = [];
+        foreach($menuWeek as $menu){
+            foreach($menu as $m){
+                $str[] = $m->goods_name;
+            }
+        }
+
+        foreach ($str as $row){
+            $data[$row] = array_keys($menuWeek);
+            $data[$row] = array_flip($data[$row]);
+        }
+
+        foreach($data as $rowK => &$rowV){
+            foreach($rowV as $k => &$v){
+                foreach($menuWeek[$k] as $m){
+                    if($m->goods_name == $rowK){
+                        $v = $m->num;
+                    }
+                }
+            }
+        }
+
+        foreach($data as &$row){
+            foreach($row as &$r){
+                if(gettype($r) == 'integer'){
+                    $r = '0';
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    //最近三月菜品销量统计
+    public function menuMonth(){
+        $menuWeek = [];
+        $data = [];
+        for($i=0;$i<=2;$i++){
+            $date = date('Y-m',strtotime("-$i month"));
+            $menuWeek[$date] = DB::select('select goods_id,sum(amount) as num from order_details join menus on order_details.goods_id = menus.id where menus.shop_id = ? and order_details.created_at like ? GROUP BY goods_id ',[Auth::user()->shop_id,"$date%"]);
+            foreach ($menuWeek[$date] as $row){
+                $row->goods_name = Menu::select('goods_name')->find($row->goods_id)->toArray()['goods_name'];
+                unset($row->goods_id);
+            }
+        }
+
+        $str = [];
+        foreach($menuWeek as $menu){
+            foreach($menu as $m){
+                $str[] = $m->goods_name;
+            }
+        }
+
+        foreach ($str as $row){
+            $data[$row] = array_keys($menuWeek);
+            $data[$row] = array_flip($data[$row]);
+        }
+
+        foreach($data as $rowK => &$rowV){
+            foreach($rowV as $k => &$v){
+                foreach($menuWeek[$k] as $m){
+                    if($m->goods_name == $rowK){
+                        $v = $m->num;
+                    }
+                }
+            }
+        }
+
+        foreach($data as &$row){
+            foreach($row as &$r){
+                if(gettype($r) == 'integer'){
+                    $r = '0';
+                }
+            }
+        }
+
+
+
+
+
+        return $data;
+    }
+
 }

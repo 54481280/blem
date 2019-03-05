@@ -37,5 +37,11 @@ Route::get('logout','LoginController@logout')->name('logout');//退出登录功�
 //定义活动资源路由
 Route::resource('active','ActiveController');
 
+//定义会员资源路由
+Route::resource('member','MemberController');
+Route::get('member/{member}/status/','MemberController@status')->name('member.status');//商家状态路由
+
+
+
 
 
