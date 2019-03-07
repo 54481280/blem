@@ -31,10 +31,3 @@
             </li>
         </ul>
     </div>
-    <div class="row content">
-        <div class="col-md-12" style="margin-top:20px">
-            <ol class="breadcrumb">
-                <li><a href="#">后台系统</a></li>
-                @yield('path')
-            </ol>
-        </div>

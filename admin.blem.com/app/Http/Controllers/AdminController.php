@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -17,12 +18,16 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //管理员列表
-        $rows = Admin::all();//获取所有管理员数据
+        if($keyword = $request->keyword){
+            $rows = Admin::where('name','like',"%$keyword%")->paginate(3);//获取所有管理员数据
+        }else{
+            $rows = Admin::paginate(3);//获取所有管理员数据
+        }
 
-        return view('Admin.index',compact('rows'));
+        return view('Admin.index',compact('rows','keyword'));
     }
 
     /**
@@ -32,8 +37,10 @@ class AdminController extends Controller
      */
     public function create()
     {
+        //获取所有角色数据
+        $rows = Role::all();
         //添加管理员表单
-        return view('Admin.create');
+        return view('Admin.create',compact('rows'));
     }
 
     /**
@@ -51,6 +58,7 @@ class AdminController extends Controller
                 'email' => 'required|email',//邮箱
                 'password' => 'required',//密码不能为空
                 'password2' => 'required|same:password',//重复密码不能为空且要相同
+                'role' => 'required',
             ],[
                 'name.required' => '管理员账号不能为空',
                 'email.required' => '管理员邮箱不能为空',
@@ -58,14 +66,19 @@ class AdminController extends Controller
                 'password.required' => '管理员密码不能为空',
                 'password2.required' => '管理员重复密码不能为空',
                 'password2.same' => '两次密码不一致，请重新输入',
+                'role.required' => '角色不能为空'
             ]);
 
         //验证通过，将数据写入数据库
-        Admin::create([
+        $admin = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if($request->role){
+            $admin->syncRoles($request->role);
+        }
 
         //添加功能完成，跳转页面及给出提示信息
         return redirect()->route('admin.index')->with('success','添加管理员成功！');
@@ -92,8 +105,11 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
+        //获取所有角色数据
+        $rows = Role::all();
+        $roles = $admin->getRoleNames();
         //管理员编辑表单
-        return view('Admin.edit',compact('admin'));
+        return view('Admin.edit',compact('admin','rows','roles'));
     }
 
     /**
@@ -108,16 +124,13 @@ class AdminController extends Controller
         //管理员编辑功能
         $this->validate($request,
             [
-                'email' => 'required|email',//邮箱
+                'role' => 'required',//角色
             ],[
-                'email.required' => '管理员邮箱不能为空',
-                'email.email' => '管理员邮箱格式不正确',
+                'role.required' => '角色不能为空',
+
             ]);
 
-        //验证通过，将数据写入数据库
-        $admin->update([
-            'email' => $request->email,
-        ]);
+        $admin->syncRoles($request->role);//重置角色
 
         //更新功能完成，跳转页面及给出提示信息
         return redirect()->route('admin.index')->with('success','更新管理员成功！');
@@ -132,7 +145,7 @@ class AdminController extends Controller
 
 
     public function destroy(Admin $admin,Request $request)
-    {//修改密码功能
+    {
         //验证表单数据
         $this->validate($request,
             [
@@ -162,5 +175,14 @@ class AdminController extends Controller
         //修改密码成功
         return redirect()->route('admin.index')->with('success','修改个人密码成功！');
 
+    }
+
+    public function del(Admin $admin){
+
+        //删除该管理员的角色关联
+        $admin->syncRoles();
+        //删除管理员
+        $admin->delete();
+        return back()->with('success','删除成功');
     }
 }

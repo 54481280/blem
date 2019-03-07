@@ -28,6 +28,7 @@ Route::get('user/{user}/status/','UsersController@status')->name('user.status');
 
 //定义管理员资源路由
 Route::resource('admin','AdminController');
+Route::get('admin/{admin}/del','AdminController@del')->name('admin.del');
 
 //定义登录路由
 Route::get('login','LoginController@index')->name('login');//登录页面
@@ -40,6 +41,16 @@ Route::resource('active','ActiveController');
 //定义会员资源路由
 Route::resource('member','MemberController');
 Route::get('member/{member}/status/','MemberController@status')->name('member.status');//商家状态路由
+
+//定义权限资源路由
+Route::resource('permission','PermissionController');
+
+//定义角色资源路由
+Route::resource('role','RoleController');
+
+//定义数据统计资源路由
+Route::get('index','IndexController@index');
+
 
 
 

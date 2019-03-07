@@ -2,14 +2,22 @@
 @section('path'){{--页面位置--}}
 <li><a href="#">管理员管理</a></li>
 <li><a href="#">管理员列表</a></li>
-<li><a href="#">更新管理员邮箱</a></li>
+<li><a href="#">更新管理员角色</a></li>
 @stop
 @section('content')
 @include('layout._error')
     <form action="{{route('admin.update',[$admin])}}" method="post" enctype="multipart/form-data">
         <div class="form-group row col-md-12">
-            <label for="password">邮箱</label>
-            <input type="text" class="form-control" id="password" name="email" value="{{old('email')}}" placeholder="请输入新邮箱">
+            <label for="username">重置角色</label><br>
+            @foreach($rows as $row)
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" name="role[]" value="{{$row->name}}"
+                    @if($admin->hasRole($row->name))
+                        checked
+                   @endif
+                    > {{$row->name}}
+                </label>
+            @endforeach
         </div>
         {{csrf_field()}}
         {{method_field('patch')}}

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\ShopCategories;
 use App\Models\Shops;
 use App\Models\User;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use function PHPSTORM_META\type;
 
 class UserController extends Controller
 {
@@ -54,7 +52,7 @@ class UserController extends Controller
         //最近一周菜品销量
         $data['menuWeek'] = $this->menuWeek();
         $data['menuMonth'] = $this->menuMonth();
-
+//        dd($data['menuWeek']);
         //商家个人中心
         return view('User.index',compact('data'));
     }
@@ -253,19 +251,16 @@ class UserController extends Controller
                 unset($row->goods_id);
             }
         }
-
         $str = [];
         foreach($menuWeek as $menu){
             foreach($menu as $m){
                 $str[] = $m->goods_name;
             }
         }
-
         foreach ($str as $row){
             $data[$row] = array_keys($menuWeek);
             $data[$row] = array_flip($data[$row]);
         }
-
         foreach($data as $rowK => &$rowV){
             foreach($rowV as $k => &$v){
                 foreach($menuWeek[$k] as $m){
@@ -275,7 +270,6 @@ class UserController extends Controller
                 }
             }
         }
-
         foreach($data as &$row){
             foreach($row as &$r){
                 if(gettype($r) == 'integer'){
@@ -283,10 +277,9 @@ class UserController extends Controller
                 }
             }
         }
-
+        dd($data);
         return $data;
     }
-
     //最近三月菜品销量统计
     public function menuMonth(){
         $menuWeek = [];
@@ -299,19 +292,16 @@ class UserController extends Controller
                 unset($row->goods_id);
             }
         }
-
         $str = [];
         foreach($menuWeek as $menu){
             foreach($menu as $m){
                 $str[] = $m->goods_name;
             }
         }
-
         foreach ($str as $row){
             $data[$row] = array_keys($menuWeek);
             $data[$row] = array_flip($data[$row]);
         }
-
         foreach($data as $rowK => &$rowV){
             foreach($rowV as $k => &$v){
                 foreach($menuWeek[$k] as $m){
@@ -321,7 +311,6 @@ class UserController extends Controller
                 }
             }
         }
-
         foreach($data as &$row){
             foreach($row as &$r){
                 if(gettype($r) == 'integer'){
@@ -329,11 +318,6 @@ class UserController extends Controller
                 }
             }
         }
-
-
-
-
-
         return $data;
     }
 

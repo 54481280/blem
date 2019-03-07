@@ -15,6 +15,7 @@
         <th><input type="checkbox" name="ids" id="ids" value="0"> 序号</th>
         <th>管理员账号</th>
         <th>管理员邮箱</th>
+        <th>角色</th>
         <th>更新时间</th>
         <th>操作</th>
     </tr>
@@ -23,12 +24,17 @@
             <td style="line-height: 60px"><input type="checkbox" name="id" class="id" value="{{$row->id}}"> {{$row->id}}</td>
             <td style="line-height: 60px">{{$row->name}}</td>
             <td style="line-height: 60px">{{$row->email}}</td>
+            <td style="line-height: 60px">{{implode(',',$row->getRoleNames()->toArray())}}</td>
             <td style="line-height: 60px">{{$row->updated_at}}</td>
             <td style="line-height: 60px">
-                <button class="btn btn-warning" title="修改邮箱" onclick="location.href='{{route('admin.edit',[$row])}}'"><span class="glyphicon glyphicon-envelope"></span></button>
+                <button class="btn btn-warning" title="修改角色" onclick="location.href='{{route('admin.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                <button class="btn btn-danger" title="删除" onclick="location.href='{{route('admin.del',[$row])}}'"><span class="glyphicon glyphicon-trash"></span></button>
             </td>
         </tr>
     @endforeach
 </table>
+<div style="float: right">
+    {{$rows->appends(['keyword'=>$keyword])->links()}}
+</div>
 @stop
 

@@ -14,7 +14,7 @@ class AddStatusToMembers extends Migration
     public function up()
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->tinyInteger('status');
+//            $table->tinyInteger('status');
         });
     }
 

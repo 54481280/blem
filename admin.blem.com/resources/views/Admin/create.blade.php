@@ -22,6 +22,15 @@
             <label for="password2">重复密码</label>
             <input type="password" class="form-control" id="password2" name="password2" value="{{old('password2')}}" placeholder="请再次输入密码">
         </div>
+        <div class="form-group row col-md-12">
+            <label for="username">角色</label><br>
+            @foreach($rows as $row)
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" name="role[]" value="{{$row->name}}"> {{$row->name}}
+                </label>
+            @endforeach
+
+        </div>
         {{csrf_field()}}
         <button type="submit" class="btn btn-success col-md-1">确定添加</button>
     </form>
