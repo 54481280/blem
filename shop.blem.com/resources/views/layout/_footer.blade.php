@@ -19,6 +19,7 @@
     <!-- Javascript -->
     <script type="text/javascript" src="/js/app2.js"></script>
     <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/theming.js"></script>
     <script>
         $('#Pwd').on('click',function(){
             $('.nonediv').hide();

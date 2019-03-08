@@ -25,7 +25,7 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="请输入新密码">
             </div>
             <div class="form-group row col-md-12">
-                <label for="password">请输入原始密码</label>
+                <label for="password">请再次输入密码</label>
                 <input type="password" class="form-control" id="password" name="password2" placeholder="请再次输入密码">
             </div>
             <div class="form-group row col-md-12">

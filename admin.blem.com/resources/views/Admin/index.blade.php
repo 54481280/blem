@@ -1,6 +1,15 @@
 @extends('layout.list')
+
+@can('添加管理员')
+
 @section('CreateUrl'){{route('admin.create')}}@stop
 @section('CreateStr')新增管理员@stop{{--添加语--}}
+
+@else
+@section('CreateStr')管理员@stop{{--添加语--}}
+
+@endcan
+
 @section('logo_search') glyphicon-education @stop{{--图标--}}
 @section('SearchUrl'){{route('admin.index')}}@stop{{--搜索链接--}}
 @section('Search')搜索管理员@stop{{--提示语--}}
@@ -27,8 +36,12 @@
             <td style="line-height: 60px">{{implode(',',$row->getRoleNames()->toArray())}}</td>
             <td style="line-height: 60px">{{$row->updated_at}}</td>
             <td style="line-height: 60px">
-                <button class="btn btn-warning" title="修改角色" onclick="location.href='{{route('admin.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
-                <button class="btn btn-danger" title="删除" onclick="location.href='{{route('admin.del',[$row])}}'"><span class="glyphicon glyphicon-trash"></span></button>
+                @can('更新管理员角色')
+                    <button class="btn btn-warning" title="修改角色" onclick="location.href='{{route('admin.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                @endcan
+                @can('删除管理员')
+                    <button class="btn btn-danger" title="删除" onclick="location.href='{{route('admin.del',[$row])}}'"><span class="glyphicon glyphicon-trash"></span></button>
+                @endcan
             </td>
         </tr>
     @endforeach

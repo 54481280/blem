@@ -40,3 +40,8 @@ Route::get('wait','ActiveController@wait')->name('active.wait');
 Route::get('Order','OrderController@index')->name('order.index');
 Route::get('Order/status','OrderController@status');
 
+//更多
+Route::get('Mores/index',function(){
+   return view('Mores.index');
+});
+

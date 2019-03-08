@@ -10,6 +10,8 @@ use App\Models\MenuCategories;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Shops;
+use App\Models\User;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -469,6 +471,8 @@ class ApiController extends Controller
 
         //生成订单随机编号
         $sn = date('Ymd').uniqid();
+
+
         //生成第三方交易号
         $out_trade_no = uniqid();
         //声明总价格
@@ -520,15 +524,21 @@ class ApiController extends Controller
 
                 //订单操作完成，清空该用户的购物车
                 Carts::where('user_id',Auth::user()->id)->delete();
+
                 //返回订单ID
-                return $order->id;
+                return [$order->id,$shop_id];
             });
         }catch (\Exception $exception){
             return ['status' => 'false','message' => '添加失败','order_id' => 0];
         }
 
+        //下单成功，发送短信提醒用户
+        $this->tips($sn);
+        //发送邮件提示商家
+        $this->email($orderId[1],$sn);
 
-        return ['status' => 'true','message' => '添加成功','order_id' => $orderId];
+
+        return ['status' => 'true','message' => '添加成功','order_id' => $orderId[0]];
     }
 
     //获取指定订单数据接口
@@ -691,6 +701,76 @@ class ApiController extends Controller
         return ['status' => 'true','message' => '重置密码成功'];
 
     }
+
+    //发送短信提示
+    public function tips($sn){
+        $sn = substr($sn,10,5);
+
+        // 短信应用SDK AppID
+        $appid = 1400189795; // 1400开头
+
+        // 短信应用SDK AppKey
+        $appkey = "f0f379ddda7c39e41088a3881b20cb35";
+
+        // 需要发送短信的手机号码
+        $phoneNumber = Auth::user()->tel;
+
+        // 短信模板ID，需要在短信应用中申请
+        $templateId = 290426;  // NOTE: 这里的模板ID`7839`只是一个示例，真实的模板ID需要在短信控制台中申请
+
+        $smsSign = "firstyun"; // NOTE: 这里的签名只是示例，请使用真实的已申请的签名，签名参数使用的是`签名内容`，而不是`签名ID`
+
+        try {
+            $ssender = new SmsSingleSender($appid, $appkey);
+            $params = ['***'.$sn.'***'];//编号订单
+
+            //发送短信
+            $result = $ssender->sendWithParam(
+                "86",
+                $phoneNumber,
+                $templateId,
+                $params,
+                $smsSign,
+                "",
+                ""
+            );  // 签名参数未提供或者为空时，会使用默认签名发送短信
+
+            $rsp = json_decode($result);
+            if($rsp != 'OK'){
+                return $rsp;
+            }
+//            dd($rsp);
+//            return $rsp;
+
+        } catch(\Exception $e) {
+            echo var_dump($e);
+
+            //获取验证码失败
+            return ['status'=>'false','message' => '获取验证码失败'];
+        }
+        //获取验证码成功
+        return ['status'=>'true','message' => '获取验证码成功'];
+    }
+
+    //发送邮件
+    public function email($shop,$sn){
+        //发送邮件
+        $title = '您有一个新的订单！';
+        $content = '您有一个新的订单在'.date("Y-m-d H:i:s").'产生，请及时处理！订单编号：'.$sn;
+        //获取商家邮箱
+        $email = Users::select('email')->where('shop_id',$shop)->first();
+        try{
+            \Illuminate\Support\Facades\Mail::send('Email.index',compact('title','content'),
+                function($message) use ($shop,$email){
+                    $to = $email->email;
+                    $message->from(env('MAIL_USERNAME'))->to($to)->subject('您有一个新的订单！');
+                });
+        }catch (Exception $e){
+            return '邮件发送失败';
+        }
+    }
+
+
 
 
 

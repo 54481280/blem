@@ -1,6 +1,11 @@
 @extends('layout.list')
+
+@can('新增商家')
 @section('CreateUrl'){{route('shops.create')}}@stop
 @section('CreateStr')新增商家@stop{{--添加语--}}
+@else
+@section('CreateStr')商家@stop{{--添加语--}}
+@endcan
 @section('logo_search') glyphicon-tags @stop{{--图标--}}
 @section('SearchUrl'){{route('shops.index')}}@stop{{--搜索链接--}}
 @section('Search')搜索商家@stop{{--提示语--}}
@@ -38,6 +43,7 @@
                 @endif
             </td>
             <td style="line-height: 60px">
+                @can('修改商家状态')
                 @if($row->status == 0)
                 <button class="btn" title="验证审核" onclick="location.href='{{route('shops.status',[$row])}}';"><span class="glyphicon glyphicon-minus"></span></button>
                 @elseif($row->status == 1)
@@ -45,14 +51,20 @@
                 @elseif($row->status == -1)
                 <button class="btn btn-danger" title="启用" onclick="location.href='{{route('shops.status',[$row])}}';"><span class="glyphicon glyphicon-remove"></span></button>
                 @endif
-
+                @endcan
+                @can('查看商家详细信息')
                 <button class="btn btn-success" title="查看详情" onclick="location.href='{{route('shops.show',[$row])}}'"><span class="glyphicon glyphicon-eye-open"></span></button>
+                    @endcan
+                    @can('修改商家信息')
                 <button class="btn btn-warning" title="编辑" onclick="location.href='{{route('shops.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                    @endcan
+                    @can('删除商家')
                 <form action="{{route('shops.destroy',[$row])}}" method="post" style="display: inline">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button class="btn btn-danger" title="删除"><span class="glyphicon glyphicon-trash"></span></button>
                 </form>
+                        @endcan
             </td>
         </tr>
         @endforeach

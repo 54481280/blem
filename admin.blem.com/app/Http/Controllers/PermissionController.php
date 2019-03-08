@@ -18,9 +18,9 @@ class PermissionController extends Controller
     {
         //权限列表
         if($keyword = $request->keyword){
-            $rows = Permission::where('name','like',"%$keyword%")->paginate(3);
+            $rows = Permission::where('name','like',"%$keyword%")->paginate(5);
         }else{
-            $rows =  Permission::paginate(3);
+            $rows =  Permission::paginate(5);
         }
         return view('Permission.index',compact('rows','keyword'));
     }

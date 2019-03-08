@@ -1,6 +1,11 @@
 @extends('layout.list')
+
+@can('新增商家')
 @section('CreateUrl'){{route('shops.create')}}@stop
 @section('CreateStr')新增商家@stop{{--添加语--}}
+@else
+@section('CreateStr')商家@stop{{--添加语--}}
+@endcan
 @section('logo_search') glyphicon-user @stop{{--图标--}}
 @section('SearchUrl'){{route('user.index')}}@stop{{--搜索链接--}}
 @section('Search')搜索商家账号@stop{{--提示语--}}
@@ -31,16 +36,16 @@
                     @endif
             </td>
             <td style="line-height: 60px">
+                @can('修改商家账号状态')
                 @if($row->status)
                     <button class="btn" title="禁用" onclick="location.href='{{route('user.status',[$row])}}'"><span class="glyphicon glyphicon-edit"></span></button>
                 @else
                     <button class="btn btn-primary" title="启用" onclick="location.href='{{route('user.status',[$row])}}'"><span class="glyphicon glyphicon-check"></span></button>
                 @endif
+                @endcan
+                @can('重置商家账号密码')
                     <button class="btn btn-warning" title="重置密码" onclick="location.href='{{route('user.edit',[$row])}}'"><span class="glyphicon glyphicon-lock"></span></button>
-                    <form action="{{route('shop.destroy',[$row])}}" method="post" style="display: inline">
-                    {{csrf_field()}}
-                    {{method_field('delete')}}
-                </form>
+                    @endcan
             </td>
         </tr>
         @endforeach

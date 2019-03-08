@@ -277,7 +277,6 @@ class UserController extends Controller
                 }
             }
         }
-        dd($data);
         return $data;
     }
     //最近三月菜品销量统计

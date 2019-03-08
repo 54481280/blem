@@ -68,7 +68,7 @@ class RoleController extends Controller
 
         //赋予权限
         if($request->role){
-            $role->givePermissionTo($request->role);
+            $role->syncPermissions($request->role);
         }
 
         return redirect()->route('role.index')->with('success','添加角色成功');
@@ -123,9 +123,7 @@ class RoleController extends Controller
         ]);
 
         //赋予权限
-        if($request->role){
-            $role->givePermissionTo($request->role);
-        }
+        $role->syncPermissions($request->role);
 
         return redirect()->route('role.index')->with('success','更新角色成功');
     }

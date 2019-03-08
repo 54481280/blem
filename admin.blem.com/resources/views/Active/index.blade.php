@@ -1,6 +1,16 @@
 @extends('layout.list')
+
+
+@can('添加商家活动')
+
 @section('CreateUrl'){{route('active.create')}}@stop
 @section('CreateStr')新增商家活动@stop{{--添加语--}}
+
+@else
+@section('CreateStr')商家活动@stop{{--添加语--}}
+@endcan
+
+
 @section('logo_search') glyphicon glyphicon-th-large @stop{{--图标--}}
 @section('SearchUrl'){{route('active.index')}}@stop{{--搜索链接--}}
 @section('Search')搜索商家活动@stop{{--提示语--}}
@@ -49,7 +59,9 @@
                 @endif
             </td>
             <td style="line-height: 60px">
+                @can('修改商家活动')
                 <button class="btn btn-warning" title="更新活动" onclick="location.href='{{route('active.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                    @endcan
             </td>
         </tr>
     @endforeach

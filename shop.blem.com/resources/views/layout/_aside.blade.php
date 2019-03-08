@@ -83,15 +83,13 @@
                 <!-- Dropdown-->
                 <li class="panel panel-default dropdown">
                     <a data-toggle="collapse" href="#dropdown-example">
-                        <span class="icon fa fa-slack"></span><span class="title">Page Example</span>
+                        <span class="icon fa fa-slack"></span><span class="title">更多</span>
                     </a>
                     <!-- Dropdown level 1 -->
                     <div id="dropdown-example" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
-                                <li><a href="pages/login.html">Login</a>
-                                </li>
-                                <li><a href="pages/index.html">Landing Page</a>
+                                <li><a href="Mores/index">主题化</a>
                                 </li>
                             </ul>
                         </div>

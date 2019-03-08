@@ -1,6 +1,11 @@
 @extends('layout.list')
+@can('添加权限')
 @section('CreateUrl'){{route('permission.create')}}@stop
 @section('CreateStr')新增权限@stop{{--添加语--}}
+@else
+@section('CreateStr')权限@stop{{--添加语--}}
+@endcan
+
 @section('logo_search') glyphicon-briefcase @stop{{--图标--}}
 @section('SearchUrl'){{route('permission.index')}}@stop{{--搜索链接--}}
 @section('Search')搜索权限名称@stop{{--提示语--}}
@@ -27,12 +32,16 @@
             <td style="line-height: 60px">{{$row->created_at}}</td>
             <td style="line-height: 60px">{{$row->updated_at}}</td>
             <td style="line-height: 60px">
-                <button class="btn btn-warning" title="修改邮箱" onclick="location.href='{{route('permission.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                @can('修改权限')
+                <button class="btn btn-warning" title="修改权限" onclick="location.href='{{route('permission.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                @endcan
+                @can('删除权限')
                 <form action="{{route('permission.destroy',[$row])}}" method="post" style="display: inline">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button class="btn btn-danger" title="删除"><span class="glyphicon glyphicon-trash"></span></button>
                 </form>
+                    @endcan
             </td>
         </tr>
     @endforeach

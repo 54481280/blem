@@ -241,9 +241,27 @@ class ShopsController extends Controller
     public function status(Shops $shop){
         if($shop->status == 0){
             $status = 1;//如果该商家还未通过审核，就更新为启用
+
+            //发送邮件
+            $title = '恭喜！您的店铺已经审核成功！';
+            $content = '您的店铺在'.date("Y-m-d H:i:s").'已经通过审核，可以进行正常的使用！';
+            try{
+                \Illuminate\Support\Facades\Mail::send('Email.index',compact('title','content'),
+                    function($message) use($shop) {
+                        $to = $shop->users->email;
+                        $message->from(env('MAIL_USERNAME'))->to($to)->subject('您的店铺已经审核成功！');
+                    });
+            }catch (Exception $e){
+                return '邮件发送失败';
+            }
+
+
             $info = 'success';
             $str = '商家审核成功！';
+
+            //发送邮件
         }
+
         if($shop->status == 1){
             $status = -1;//如果该商家已启用，更新为禁用
             $info = 'warning';

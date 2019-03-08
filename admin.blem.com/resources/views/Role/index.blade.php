@@ -1,6 +1,11 @@
 @extends('layout.list')
+@can('添加角色')
 @section('CreateUrl'){{route('role.create')}}@stop
 @section('CreateStr')新增角色@stop{{--添加语--}}
+@else
+@section('CreateStr')新角色@stop{{--添加语--}}
+@endcan
+
 @section('logo_search') glyphicon-knight @stop{{--图标--}}
 @section('SearchUrl'){{route('role.index')}}@stop{{--搜索链接--}}
 @section('Search')搜索角色名称@stop{{--提示语--}}
@@ -27,12 +32,16 @@
             <td style="line-height: 60px">{{$row->created_at}}</td>
             <td style="line-height: 60px">{{$row->updated_at}}</td>
             <td style="line-height: 60px">
+                @can('修改角色')
                 <button class="btn btn-warning" title="更新角色" onclick="location.href='{{route('role.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
+                @endcan
+                @can('删除角色')
                 <form action="{{route('role.destroy',[$row])}}" method="post" style="display: inline">
                     {{csrf_field()}}
                     {{method_field('delete')}}
                     <button class="btn btn-danger" title="删除"><span class="glyphicon glyphicon-trash"></span></button>
                 </form>
+                    @endcan
             </td>
         </tr>
     @endforeach

@@ -35,4 +35,8 @@ class Shops extends Model
         return $this->belongsTo(ShopCategories::class,'shop_category_id');
     }
 
+    public function users(){
+        return $this->hasOne(Users::class,'shop_id','id');
+    }
+
 }
