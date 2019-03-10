@@ -65,8 +65,9 @@ class ActiveController extends Controller
      */
     public function create()
     {
-        $minDate = date('Y-m-d');//最小时间
-        $maxDate = date('Y-m-d',strtotime('+1 day'));//最小时间
+        $minDate = date('Y-m-d H:i:s');//最小时间
+        $maxDate = date('Y-m-d H:i:s',strtotime('+1 day'));
+
 
         //新增功能
         return view('active.create',compact('minDate','maxDate'));

@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ActiveController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     //活动页面
     public function index(){
         $date = date('Y-m-d');//获取当前时间

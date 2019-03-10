@@ -739,8 +739,6 @@ class ApiController extends Controller
             if($rsp != 'OK'){
                 return $rsp;
             }
-//            dd($rsp);
-//            return $rsp;
 
         } catch(\Exception $e) {
             echo var_dump($e);
@@ -755,6 +753,7 @@ class ApiController extends Controller
     //发送邮件
     public function email($shop,$sn){
         //发送邮件
+        dd($shop);
         $title = '您有一个新的订单！';
         $content = '您有一个新的订单在'.date("Y-m-d H:i:s").'产生，请及时处理！订单编号：'.$sn;
         //获取商家邮箱

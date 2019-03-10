@@ -31,10 +31,10 @@
             <td style="line-height: 60px">{{$row->url}}</td>
             <td style="line-height: 60px">{{$row->permission->name}}</td>
             <td style="line-height: 60px">
-                @can('修改菜单	')
+                @can('修改菜单')
                     <button class="btn btn-warning" title="编辑" onclick="location.href='{{route('nav.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
                 @endcan
-                @can('	删除菜单')
+                @can('删除菜单')
                     <form action="{{route('nav.destroy',[$row])}}" method="post" style="display: inline">
                     {{csrf_field()}}
                     {{method_field('delete')}}

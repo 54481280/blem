@@ -59,6 +59,8 @@
                             <ul class="nav navbar-nav">
                                 <li><a href="{{route('active.index')}}">正在进行的活动</a>
                                 <li><a href="{{route('active.wait')}}">即将上线的活动</a>
+                                <li><a href="{{route('event')}}">抽奖活动报名</a>
+                                <li><a href="{{route('event.nameList')}}">抽奖活动得奖名单</a>
                                 </li>
                             </ul>
                         </div>

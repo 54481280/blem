@@ -40,6 +40,11 @@ Route::get('wait','ActiveController@wait')->name('active.wait');
 Route::get('Order','OrderController@index')->name('order.index');
 Route::get('Order/status','OrderController@status');
 
+//定义抽奖活动
+Route::get('event/index','EventController@index')->name('event');
+Route::get('event/{event}/singUp','EventController@singUp')->name('event.singUp');
+Route::get('event/nameList','EventController@nameList')->name('event.nameList');
+
 //更多
 Route::get('Mores/index',function(){
    return view('Mores.index');

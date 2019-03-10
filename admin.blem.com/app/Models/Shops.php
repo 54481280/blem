@@ -26,11 +26,6 @@ class Shops extends Model
        'status',
        ];
 
-   //获取图片快捷方式路径
-    public function img(){
-        return Storage::url($this->shop_img);
-    }
-
     public function cate(){
         return $this->belongsTo(ShopCategories::class,'shop_category_id');
     }

@@ -1,25 +1,33 @@
 @extends('layout.form')
 @section('path'){{--页面位置--}}
-<li><a href="#">商家活动管理</a></li>
-<li><a href="#">新增商家活动</a></li>
+<li><a href="#">商家抽奖活动管理</a></li>
+<li><a href="#">新增抽奖活动</a></li>
 @stop
 @section('content')
 @include('layout._error')
-    <form action="{{route('active.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('event.store')}}" method="post" enctype="multipart/form-data" >
         <div class="form-group row col-md-12">
-            <label for="title">活动名称</label>
+            <label for="title">抽奖活动名称</label>
             <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}" placeholder="请输入活动名称">
         </div>
         <div class="form-group row col-md-12">
             <label for="start">活动开始时间</label>
-            <input type="datetime-local" class="form-control" value="{{old('start_time')}}" min="{{str_replace(' ','T',$minDate)}}" id="start" name="start_time" >
+            <input type="datetime-local" class="form-control" value="{{old('start_time')}}" min="{{str_replace(' ','T',$minDate)}}" id="start" name="signup_start" >
         </div>
         <div class="form-group row col-md-12">
             <label for="end_time">活动结束时间</label>
-            <input type="datetime-local" class="form-control" min="{{str_replace(' ','T',$maxDate)}}" id="end_time" name="end_time" value="{{old('end_time')}}">
+            <input type="datetime-local" class="form-control" min="{{str_replace(' ','T',$maxDate)}}" id="end_time" name="signup_end" value="{{old('end_time')}}">
         </div>
         <div class="form-group row col-md-12">
-            <label for="content">活动详情</label>
+            <label for="end_time">开奖日期</label>
+            <input type="date" class="form-control" min="{{$date}}" id="end_time" name="prize_date" value="{{old('end_time') ?? $date}}">
+        </div>
+        <div class="form-group row col-md-12">
+            <label for="end_time">报名限制人数</label>
+            <input type="text" class="form-control" id="end_time" name="signup_num" value="{{old('signup_num')}}">
+        </div>
+        <div class="form-group row col-md-12">
+            <label for="content">详情</label>
             <script id="container" class="reply_ueditor" name="content" type="text/plain"></script>
         </div>
         {{csrf_field()}}

@@ -239,6 +239,7 @@ class ShopsController extends Controller
 
     //商家状态功能
     public function status(Shops $shop){
+//        return $shop;
         if($shop->status == 0){
             $status = 1;//如果该商家还未通过审核，就更新为启用
 

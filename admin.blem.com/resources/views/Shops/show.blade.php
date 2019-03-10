@@ -28,7 +28,7 @@
          <tr class="shops">
             <td class="name"><h2>商家：</h2></td>
             <td class="infoShow">{{$shop->shop_name}}<sup>评分:{{$shop->shop_rating}}</sup></td>
-            <td colspan="5"><img src="{{$shop->img()}}" width="100" height="100"/></td>
+            <td colspan="5"><img src="{{$shop->shop_img}}" width="100" height="100"/></td>
          </tr>
          <tr>
             <td class="name"><h3>是否品牌：</h3></td>
