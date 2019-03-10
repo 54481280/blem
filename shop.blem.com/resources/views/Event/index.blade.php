@@ -20,8 +20,13 @@
                     <p>开奖日期：{{$row->prize_date}}</p>
                 <p>
                     @if(time()>$row->signup_start)
+                        @if(empty(\App\Models\Event::checkSing($row->id)))
                     <a class="btn btn-danger btn-lg" href="{{route('event.singUp',[$row])}}" role="button">点击报名</a>
-                    @else
+                            @else
+                            <button class="btn btn-success btn-lg" role="button">报名成功</button>
+                        @endif
+
+                        @else
                     <a class="btn btn-primary btn-lg" href="#" role="button">敬请期待</a>
                     @endif
                 </p>

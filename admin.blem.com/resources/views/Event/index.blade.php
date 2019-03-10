@@ -65,7 +65,9 @@
                 <button class="btn btn-warning" title="更新活动" onclick="location.href='{{route('event.edit',[$row])}}'"><span class="glyphicon glyphicon-pencil"></span></button>
                     @endcan
                     <button class="btn btn-success" title="查看详情" onclick="location.href='{{route('event.show',[$row])}}'"><span class="glyphicon glyphicon-eye-open"></span></button>
+                    @if(!$row->is_prize)
                     <button class="btn btn-primary" title="添加抽奖商品" onclick="location.href='{{route('event.prize',[$row])}}'"><span class="glyphicon glyphicon-plus"></span></button>
+                    @endif
 
                     <form action="{{route('event.destroy',[$row])}}" method="post" style="display: inline">
                         {{csrf_field()}}

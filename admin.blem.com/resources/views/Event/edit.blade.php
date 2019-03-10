@@ -13,15 +13,15 @@
         </div>
         <div class="form-group row col-md-12">
             <label for="start">活动开始时间</label>
-            <input type="datetime-local" class="form-control" value="{{str_replace(' ','T',date('Y-m-d H:i:s',$event->signup_start))}}" min="{{str_replace(' ','T',$minDate)}}" id="start" name="signup_start" >
+            <input type="datetime-local" class="form-control" value="{{str_replace(' ','T',date('Y-m-d H:i:s',$event->signup_start))}}" id="start" name="signup_start" >
         </div>
         <div class="form-group row col-md-12">
             <label for="end_time">活动结束时间</label>
-            <input type="datetime-local" class="form-control" min="{{str_replace(' ','T',$maxDate)}}" id="end_time" name="signup_end" value="{{str_replace(' ','T',date('Y-m-d H:i:s',$event->signup_end))}}">
+            <input type="datetime-local" class="form-control" id="end_time" name="signup_end" value="{{str_replace(' ','T',date('Y-m-d H:i:s',$event->signup_end))}}">
         </div>
         <div class="form-group row col-md-12">
             <label for="end_time">开奖日期</label>
-            <input type="date" class="form-control" min="{{$date}}" id="end_time" name="prize_date" value="{{$event->prize_date}}">
+            <input type="date" class="form-control" id="end_time" name="prize_date" value="{{$event->prize_date}}">
         </div>
         <div class="form-group row col-md-12">
             <label for="end_time">报名限制人数</label>

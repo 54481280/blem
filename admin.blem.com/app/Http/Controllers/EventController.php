@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventMember;
 use App\Models\EventPrizes;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,7 +59,7 @@ class EventController extends Controller
             'content' => 'required',
             'signup_start' => 'required|date',//开始时间不能为空
             'signup_end' => 'required|date|after:signup_start',//结束时间不能为空
-            'prize_date' => 'required|date|after:signup_end',//开奖日期在报名之后
+            'prize_date' => 'required|date',//开奖日期在报名之后
             'signup_num' => 'required|integer',//报名人数必须为整数
         ],[
             'title.required' => '抽奖活动名称不能为空',
@@ -70,7 +71,6 @@ class EventController extends Controller
             'signup_end.after' => '结束报名时间必须在开始时间之后',
             'prize_date.required' => '开奖日期不能为空',
             'prize_date.date' => '开奖日期格式错误',
-            'prize_date.after' => '开奖日期必须在报名结束时间之后',
             'signup_num.required' => '限制报名人数不能为空',
             'signup_num.integer' => '限制报名人数必须为整数',
         ]);
@@ -109,9 +109,6 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $minDate = date('Y-m-d H:i:s');//最小时间
-        $maxDate = date('Y-m-d H:i:s',strtotime('+1 day'));//最小时间
-        $date = date('Y-m-d',strtotime('+2 day'));
         //更新活动表单
         return view('event.edit',compact('event','minDate','maxDate','date'));
     }
@@ -133,7 +130,7 @@ class EventController extends Controller
             'content' => 'required',
             'signup_start' => 'required|date',//开始时间不能为空
             'signup_end' => 'required|date|after:signup_start',//结束时间不能为空
-            'prize_date' => 'required|after:signup_end',//开奖日期在报名之后
+            'prize_date' => 'required',//开奖日期在报名之后
             'signup_num' => 'required|integer',//报名人数必须为整数
         ],[
             'title.required' => '抽奖活动名称不能为空',
@@ -144,7 +141,6 @@ class EventController extends Controller
             'signup_end.date' => '结束报名时间格式错误',
             'signup_end.after' => '结束报名时间必须在开始时间之后',
             'prize_date.required' => '开奖日期不能为空',
-            'prize_date.after' => '开奖日期必须在报名结束时间之后',
             'signup_num.required' => '限制报名人数不能为空',
             'signup_num.integer' => '限制报名人数必须为整数',
         ]);
@@ -173,6 +169,11 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //删除活动
+
+        //判断该活动是否已开奖完成
+        if($event->is_prize){
+            return back()->with('danger','该活动已完成，不能删除！');
+        }
         //判断该活动是否有用户报名
         if(!empty(EventMember::where('events_id',$event->id)->first())){
             return back()->with('danger','该活动已经有商家报名，删除失败！');
@@ -200,6 +201,10 @@ class EventController extends Controller
 
     //添加抽奖商品功能
     public function storePrize(Event $event,Request $request){
+        //判断该活动是否已经开奖
+        if($event->is_prize){
+            return back()->with('danger','该活动已经开奖，不能继续添加奖品！');
+        }
         //验证每一项数据
         for($i=0;$i<count($request->name);$i++){
 
@@ -225,6 +230,10 @@ class EventController extends Controller
 
     //开奖功能
     public function lottery(Event $event){
+        //判断时间是否在开奖日期后
+        if(date('Y-m-d') < $event->prize_date){
+            return back()->with('danger','开奖日期未到，开奖失败');
+        }
         //判断是否已抽奖
         if($event->is_prize){
             return back()->with('danger','不能重复抽奖');
@@ -275,6 +284,17 @@ class EventController extends Controller
             unset($dataPrize[$prize]);
         }
 
+        //捕获邮件异常，发送邮件
+        try{
+            foreach($data as $k => $v){
+                $user = Users::select('email')->find($k);
+                //调用方法发送邮件
+                $this->GetPrizeEamil($user->email);
+            }
+        }catch (\Exception $exception){
+            return back()->with('danger','发送邮件失败');
+        }
+
         /*
          * 抽奖结束，写入数据表
          */
@@ -291,11 +311,35 @@ class EventController extends Controller
                 $event->save();
 
             });
+
+
+
             return back()->with('success','抽奖成功');
         }catch (\Exception $exception){
             return back()->with('danger','抽奖失败');
         }
+    }
 
+    //删除活动奖品
+    public function delPrize(EventPrizes $prize){
+        $prize->delete();
+        return back()->with('success','删除奖品成功！');
+    }
 
+    //得奖邮件
+    public function GetPrizeEamil($email){
+        //发送邮件
+        $title = '申请通过！';
+        $content = '您参与的申请试用通过,请登录平台查看吧！';
+        try{
+            \Illuminate\Support\Facades\Mail::send('Email.index',compact('title','content'),
+                function($message) use($email) {
+
+                    $to = $email;
+                    $message->from(env('MAIL_USERNAME'))->to($to)->subject('申请通过！');
+                });
+        }catch (Exception $e){
+            return '邮件发送失败';
+        }
     }
 }

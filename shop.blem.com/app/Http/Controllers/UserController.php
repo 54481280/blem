@@ -17,7 +17,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -83,7 +83,6 @@ class UserController extends Controller
             [
                 //商家信息数据验证
                 'shop_name' => 'required',//商家名称
-                'shop_img' => 'required|image|max:2048',//商家图片
                 'shop_rating'=> 'required|numeric',
                 'start_send' => 'required',//起送金额不能为空
                 'send_cost' => 'required',//配送费不能为空
@@ -100,9 +99,6 @@ class UserController extends Controller
             [
                 //商家信息数据验证
                 'shop_name.required' => '商家名称不能为空',
-                'shop_img.required' => '请上传商家分类图片',
-                'shop_img.image' => '请上传正确格式的图片',
-                'shop_img.max' => '请上传的图片大小不超过2M',
                 'shop_rating.required' => '评分不能为空',
                 'shop_rating.numeric' => '评分只能为数字',
                 'start_send.required' => '起送金额不能为空',
@@ -118,9 +114,6 @@ class UserController extends Controller
                 'password2.required' => '商家重复密码不能为空',
                 'password2.same' => '两次密码不一致，请重新输入',
             ]);
-
-        //验证通过，上传图片到服务器，并获取上传后的图片路径
-        $path = Storage::url($request->file('shop_img')->store('public/ShopImages'));
 
         //验证通过，上传商家信息数据至数据库
         DB::beginTransaction();//开启事务
@@ -141,7 +134,7 @@ class UserController extends Controller
                 'send_cost' => $request->send_cost,
                 'notice' => $request->notice,
                 'discount' => $request->discount,
-                'shop_img' => $path,
+                'shop_img' => $request->shop_img,
                 'status' => 0,//默认为0，商家注册，需管理员审核
             ]
         );

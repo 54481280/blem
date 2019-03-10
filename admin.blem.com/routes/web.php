@@ -105,6 +105,8 @@ Route::group(['middleware' => ['permission:查看抽奖列表']], function () {
     Route::get('/event/{event}/prize','EventController@prize')->name('event.prize');//添加抽奖商品
     Route::post('/event/{event}/storePrize','EventController@storePrize')->name('event.storePrize');//添加抽奖商品
     Route::get('/event/{event}/lottery','EventController@lottery')->name('event.lottery');//开奖
+    Route::get('/event/{prize}/delPrize','EventController@delPrize')->name('event.delPrize');//开奖
+
 
 });
 

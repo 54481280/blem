@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Event extends Model
 {
@@ -29,5 +30,10 @@ class Event extends Model
     //获取用户的名称
     public static function singUpName($id){
         return User::select('name')->find($id);
+    }
+
+    //查询是否报名
+    public static function checkSing($prize_id){
+        return EventMember::where('events_id',$prize_id)->where('member_id',Auth::user()->id)->first();
     }
 }

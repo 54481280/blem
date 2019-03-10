@@ -16,6 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
+    <!--引入CSS-->
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+    <!--引入JS-->
+    <script type="text/javascript" src="/lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
 </head>
 <body style="background: #f5f5f5">
 
@@ -40,14 +45,18 @@
             <label for="shop_name">商家名称</label>
             <input type="text" class="form-control" id="shop_name" name="shop_name" value="{{old('shop_name')}}" placeholder="请输入店铺名称">
         </div>
-        <div class="form-group row col-md-4">
-            <label for="info_photo">选择商家图片</label>
-            <input type="file" name="shop_img" onchange="PreviewImage(this)" id="info_photo">
-            <p class="help-block">请选择合适的图片作为商家图片.</p>
-        </div>
-        <div class="col-md-8">
-            <img src="/images/00.jpg" width="100" height="100" id="default">
-            <div id="photo_info" class="photo_info"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div id="uploader-demo">
+                    <!--用来存放item-->
+                    <div id="fileList" class="uploader-list"></div>
+                    <div id="filePicker">选择图片</div>
+                    <input type="hidden" name="shop_img" id="img_path"/>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <img src="/images/00.jpg" id="autoImg" width="100" height="100" id="default">
+            </div>
         </div>
         <div class="form-group row col-md-12">
             <label for="shop_rating">商家评分</label>
