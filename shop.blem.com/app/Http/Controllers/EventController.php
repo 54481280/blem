@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\EventMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class EventController extends Controller
 {
@@ -23,6 +24,13 @@ class EventController extends Controller
 
     //报名活动
     public function singUp(Event $event){
+        $signup_num = Redis::decr($event->id);
+
+        if($signup_num < 0){
+            Redis::incr($event->id);
+            return back()->with('warning','抱歉，报名人数已满，下次早点吧');
+        }
+
         //判断报名人数是否符合该活动人数限制
         $count = EventMember::where('events_id',$event->id)->count();
         if($count >= $event->signup_num){

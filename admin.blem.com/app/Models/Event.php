@@ -26,7 +26,7 @@ class Event extends Model
         return $this->hasMany(EventMember::class,'events_id');
     }
 
-//    获取报名用户的名称
+    //获取报名用户的名称
     public static function singUpName($id){
         return Users::select('name')->find($id);
     }

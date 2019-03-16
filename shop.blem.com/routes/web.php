@@ -50,3 +50,21 @@ Route::get('Mores/index',function(){
    return view('Mores.index');
 });
 
+//中文分词
+Route::get('/searchd',function(){
+    $cl = new \App\SphinxClient();
+    $cl->SetServer ( '127.0.0.1', 9312);
+
+    $cl->SetConnectTimeout ( 10 );
+    $cl->SetArrayResult ( true );
+    $cl->SetMatchMode ( SPH_MATCH_EXTENDED2);
+    $cl->SetLimits(0, 1000);
+    $info = '火锅';
+    $res = $cl->Query($info, 'menus');//shopstore_search
+    $ids = [];
+    foreach($res['matches'] as $row){
+       $ids[] = $row['id'];//获取所有id
+    }
+
+});
+

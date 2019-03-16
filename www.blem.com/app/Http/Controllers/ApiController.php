@@ -10,7 +10,6 @@ use App\Models\MenuCategories;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Shops;
-use App\Models\User;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

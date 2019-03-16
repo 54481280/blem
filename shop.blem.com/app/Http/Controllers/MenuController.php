@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +30,27 @@ class MenuController extends Controller
         //如果有名称查询
         if($keyword = $request->keyword){
 
-            $rows->where('goods_name','like',"%{$keyword}%");
+            //分词搜索
+            $cl = new \App\SphinxClient();
+            $cl->SetServer ( '127.0.0.1', 9312);
+
+            $cl->SetConnectTimeout ( 10 );
+            $cl->SetArrayResult ( true );
+            $cl->SetMatchMode ( SPH_MATCH_EXTENDED2);
+            $cl->SetLimits(0, 1000);
+            $info = $keyword;
+            $res = $cl->Query($info, 'menus');//shopstore_search
+            if(isset($res['matches'])){
+                $ids = [];
+                foreach($res['matches'] as $row){
+                    $ids[] = $row['id'];//获取所有id
+                }
+
+                $rows->whereIn('id',$ids);
+            }else{
+                $rows->where('goods_name','like',"%$keyword%");
+            }
+
 
             $data['keyword'] = $request->keyword;//生成查询条件参数
         }

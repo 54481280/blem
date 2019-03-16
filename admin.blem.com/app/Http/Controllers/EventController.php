@@ -8,6 +8,7 @@ use App\Models\EventPrizes;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class EventController extends Controller
 {
@@ -76,7 +77,7 @@ class EventController extends Controller
         ]);
 
         //验证通过
-        Event::create([
+        $event = Event::create([
             'title' => $request->title,
             'content' => $request->content,
             'signup_start' => strtotime(str_replace('T',' ',$request->signup_start)),
@@ -85,6 +86,9 @@ class EventController extends Controller
             'signup_num' => $request->signup_num,
             'is_prize' => 0,
         ]);
+
+        //将报名人数写入redis
+        Redis::set($event->id,$event->signup_num);
 
         return redirect()->route('event.index')->with('success','新增活动成功');
     }
@@ -276,13 +280,16 @@ class EventController extends Controller
             //生成随机的用户（键名）
             $user = array_rand($dataUser);
             //生成随机的奖品（键名）
-            $prize = array_rand($dataPrize);
+            $prize = array_rand($dataPrize); // [user  =>  prize,user  =>  prize,user  =>  prize]
             //存入结果数组中（值）
             $data[$dataUser[$user]] = $dataPrize[$prize];
             //删除已出现的用户和奖品
             unset($dataUser[$user]);
             unset($dataPrize[$prize]);
         }
+
+        //清除redis中的数据
+        Redis::del($event->id);
 
         //捕获邮件异常，发送邮件
         try{
@@ -311,8 +318,6 @@ class EventController extends Controller
                 $event->save();
 
             });
-
-
 
             return back()->with('success','抽奖成功');
         }catch (\Exception $exception){
